@@ -1,12 +1,13 @@
 
+package Tipos;
 
 public class Tabla_Tipos_Modificador{
 
-    public double[][] getTablaTipos(){
+    
+    private double[][] tablaTipos = new double[18][18];
 
-        double[][] tablaTipos = new double[18][18];
-
-        //Tipo ataque y tipo del oponente. En ese orden.
+    public Tabla_Tipos_Modificador(){
+    //Tipo ataque y tipo del oponente. En ese orden.
     //Tabla de tipos. Primera dimensión: tipo del ataque. Segunda dimensión: tipo del oponente.
     tablaTipos[Tipo.ACERO.getNumVal()] = new double[]{0.5, 0.5, 1, 1, 0.5, 1, 0.5, 2, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1};
     tablaTipos[Tipo.AGUA.getNumVal()] = new double[]{1, 0.5, 1, 0.5, 1, 1, 2, 1, 1, 1, 1, 0.5, 1, 2, 1, 2, 1, 1};
@@ -27,7 +28,15 @@ public class Tabla_Tipos_Modificador{
     tablaTipos[Tipo.VENENO.getNumVal()] = new double[]{0, 1, 1, 1, 1, 0.5, 1, 2, 1, 1, 1, 2, 1, 0.5, 1, 0.5, 0.5, 2};
     tablaTipos[Tipo.VOLADOR.getNumVal()] = new double[]{0.5, 1, 2, 1, 0.5, 1, 1, 1, 1, 2, 1, 2, 1, 0.5, 1, 1, 1, 1};
 
-    return tablaTipos;
+    }
+
+    public double getModificador(int tipoAtacante, int tipoOponente) {
+
+        return tablaTipos[tipoAtacante][tipoOponente];
+
+      
+
+   
 
         
     }
