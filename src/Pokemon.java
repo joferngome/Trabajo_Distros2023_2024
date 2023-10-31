@@ -1,8 +1,9 @@
 //Class Pokemon
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Pokemon {
+public class Pokemon implements Serializable {
     private String name;
     
     private int health;
