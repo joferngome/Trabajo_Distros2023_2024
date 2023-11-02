@@ -5,6 +5,16 @@ public class Attack implements Serializable {
 	 private int power;
 	 private int precision;
 	 private int power_points;
+
+	 public Attack(String name, int power, int precision, int power_points){
+		 this.name = name;
+		 this.power = power;
+		 this.precision = precision;
+		 this.power_points = power_points;
+
+
+
+	 }
 	 
 	public String getName() {
 		return name;
