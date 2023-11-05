@@ -28,6 +28,8 @@ public class Combate_Servidor {
 
                     ArrayList<Tipo> tipos = new ArrayList<Tipo>();
 
+                    tipos.add(Tipo.LUCHA);
+
 
                     ArrayList<Attack> ataquesHitmonchan = new ArrayList<>();
                     Attack a1 = new Attack("Patada giro",100,100,5);
@@ -48,9 +50,22 @@ public class Combate_Servidor {
                     Equipo_Pokemon eq1 = new Equipo_Pokemon(pok1);
 
 
+                    Equipo_Pokemon Eqrival = (Equipo_Pokemon) ois.readObject();
+
+                    while(!eq1.AllDead() && !Eqrival.AllDead()){
+
+                        
+
+                    }
 
 
 
+
+
+                }
+
+                catch(ClassNotFoundException e){
+                    e.printStackTrace();
                 }
             }
 

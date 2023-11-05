@@ -11,13 +11,13 @@ public class CombateCliente {
 
     public static void main(String args[]){
 
-        try(ServerSocket ss = new ServerSocket(6666)){
+        try(Socket s = new Socket("localhost",6666);
+        ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+                    ObjectInputStream ois = new ObjectInputStream(s.getInputStream())){
 
-            while(true){
+            
 
-                try(Socket rival = ss.accept();
-                    ObjectOutputStream oos = new ObjectOutputStream(rival.getOutputStream());
-                    ObjectInputStream ois = new ObjectInputStream(rival.getInputStream())){
+                
                     ArrayList<Tipo> tipos = new ArrayList<Tipo>();
 
                     tipos.add(Tipo.AGUA);
@@ -37,8 +37,11 @@ public class CombateCliente {
                     Equipo_Pokemon equipo = new Equipo_Pokemon(p);
 
 
-                }
-            }
+                    oos.writeObject(equipo);
+
+
+                
+            
 
 
         } catch (IOException e) {

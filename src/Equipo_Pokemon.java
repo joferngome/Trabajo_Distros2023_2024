@@ -12,6 +12,23 @@ public class Equipo_Pokemon implements Serializable {
 
     }
 
+    public boolean AllDead(){
+
+        for (Pokemon pokemon : equipo) {
+
+            if(pokemon.getHealth()>0){
+                return false;
+
+            }
+
+            
+            
+        }
+
+        return true;
+
+    }
+
 
     
 }
