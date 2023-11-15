@@ -54,11 +54,11 @@ public class Combate_Servidor {
 
                     Equipo_Pokemon Eqrival = (Equipo_Pokemon) ois.readObject();
 
-                    while(!eq1.AllDead() && !Eqrival.AllDead()){
+                    //while(!eq1.AllDead() && !Eqrival.AllDead()){
 
                         
 
-                    }
+                    //}
 
 
 
