@@ -9,24 +9,24 @@ public class Tabla_Tipos_Modificador{
     public Tabla_Tipos_Modificador(){
     //Tipo ataque y tipo del oponente. En ese orden.
     //Tabla de tipos. Primera dimensión: tipo del ataque. Segunda dimensión: tipo del oponente.
-    tablaTipos[Tipo.ACERO.getNumVal()] = new double[]{0.5, 0.5, 1, 1, 0.5, 1, 0.5, 2, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1};
-    tablaTipos[Tipo.AGUA.getNumVal()] = new double[]{1, 0.5, 1, 0.5, 1, 1, 2, 1, 1, 1, 1, 0.5, 1, 2, 1, 2, 1, 1};
-    tablaTipos[Tipo.BICHO.getNumVal()] = new double[]{0.5, 1, 1, 1, 1, 0.5, 0.5, 0.5, 1, 0.5, 1, 2, 2, 1, 2, 1, 0.5, 0.5};
-    tablaTipos[Tipo.DRAGÓN.getNumVal()] = new double[]{0.5, 1, 1, 2, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-    tablaTipos[Tipo.ELÉCTRICO.getNumVal()] = new double[]{1, 2, 1, 0.5, 0.5, 1, 1, 1, 1, 1, 1, 0.5, 1, 1, 1, 0, 1, 2};
-    tablaTipos[Tipo.FANTASMA.getNumVal()] = new double[]{1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 0, 1, 2, 1, 0.5, 1, 1, 1};
-    tablaTipos[Tipo.FUEGO.getNumVal()] = new double[]{2, 0.5, 2, 0.5, 1, 1, 0.5, 1, 2, 1, 1, 2, 1, 0.5, 1, 1, 1, 1};
-    tablaTipos[Tipo.HADA.getNumVal()] = new double[]{0.5, 1, 1, 2, 1, 1, 0.5, 1, 1, 2, 1, 1, 1, 1, 2, 1, 0.5, 1};
-    tablaTipos[Tipo.HIELO.getNumVal()] = new double[]{0.5, 0.5, 1, 2, 1, 1, 0.5, 1, 0.5, 1, 1, 2, 1, 1, 1, 2, 1, 2};
-    tablaTipos[Tipo.LUCHA.getNumVal()] = new double[]{2, 1, 0.5, 1, 1, 0, 1, 0.5, 2, 1, 2, 1, 0.5, 2, 2, 1, 0.5, 0.5};
-    tablaTipos[Tipo.NORMAL.getNumVal()] = new double[]{0.5, 1, 1, 1, 1, 0, 1, 1, 1, 2, 1, 1, 1, 0.5, 1, 1, 1, 1};
-    tablaTipos[Tipo.PLANTA.getNumVal()] = new double[]{0.5, 2, 0.5, 0.5, 1, 1, 0.5, 1, 1, 1, 1, 0.5, 1, 2, 1, 2, 0.5, 0.5};
-    tablaTipos[Tipo.PSÍQUICO.getNumVal()] = new double[]{0.5, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 0.5, 1, 0, 1, 2, 1};
-    tablaTipos[Tipo.ROCA.getNumVal()] = new double[]{0.5, 1, 2, 1, 1, 1, 2, 1, 2, 0.5, 1, 1, 1, 1, 1, 0.5, 1, 2};
-    tablaTipos[Tipo.SINIESTRO.getNumVal()] = new double[]{1, 1, 1, 1, 1, 2, 1, 0.5, 1, 0.5, 1, 1, 2, 1, 0.5, 1, 1, 1};
-    tablaTipos[Tipo.TIERRA.getNumVal()] = new double[]{2, 1, 0.5, 1, 2, 1, 2, 1, 1, 1, 1, 0.5, 1, 2, 1, 1, 2, 0};
-    tablaTipos[Tipo.VENENO.getNumVal()] = new double[]{0, 1, 1, 1, 1, 0.5, 1, 2, 1, 1, 1, 2, 1, 0.5, 1, 0.5, 0.5, 2};
-    tablaTipos[Tipo.VOLADOR.getNumVal()] = new double[]{0.5, 1, 2, 1, 0.5, 1, 1, 1, 1, 2, 1, 2, 1, 0.5, 1, 1, 1, 1};
+    tablaTipos[Tipo.steel.getNumVal()] = new double[]{0.5, 0.5, 1, 1, 0.5, 1, 0.5, 2, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1};
+    tablaTipos[Tipo.water.getNumVal()] = new double[]{1, 0.5, 1, 0.5, 1, 1, 2, 1, 1, 1, 1, 0.5, 1, 2, 1, 2, 1, 1};
+    tablaTipos[Tipo.bug.getNumVal()] = new double[]{0.5, 1, 1, 1, 1, 0.5, 0.5, 0.5, 1, 0.5, 1, 2, 2, 1, 2, 1, 0.5, 0.5};
+    tablaTipos[Tipo.dragon.getNumVal()] = new double[]{0.5, 1, 1, 2, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+    tablaTipos[Tipo.electric.getNumVal()] = new double[]{1, 2, 1, 0.5, 0.5, 1, 1, 1, 1, 1, 1, 0.5, 1, 1, 1, 0, 1, 2};
+    tablaTipos[Tipo.ghost.getNumVal()] = new double[]{1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 0, 1, 2, 1, 0.5, 1, 1, 1};
+    tablaTipos[Tipo.fire.getNumVal()] = new double[]{2, 0.5, 2, 0.5, 1, 1, 0.5, 1, 2, 1, 1, 2, 1, 0.5, 1, 1, 1, 1};
+    tablaTipos[Tipo.fairy.getNumVal()] = new double[]{0.5, 1, 1, 2, 1, 1, 0.5, 1, 1, 2, 1, 1, 1, 1, 2, 1, 0.5, 1};
+    tablaTipos[Tipo.ice.getNumVal()] = new double[]{0.5, 0.5, 1, 2, 1, 1, 0.5, 1, 0.5, 1, 1, 2, 1, 1, 1, 2, 1, 2};
+    tablaTipos[Tipo.fighting.getNumVal()] = new double[]{2, 1, 0.5, 1, 1, 0, 1, 0.5, 2, 1, 2, 1, 0.5, 2, 2, 1, 0.5, 0.5};
+    tablaTipos[Tipo.normal.getNumVal()] = new double[]{0.5, 1, 1, 1, 1, 0, 1, 1, 1, 2, 1, 1, 1, 0.5, 1, 1, 1, 1};
+    tablaTipos[Tipo.grass.getNumVal()] = new double[]{0.5, 2, 0.5, 0.5, 1, 1, 0.5, 1, 1, 1, 1, 0.5, 1, 2, 1, 2, 0.5, 0.5};
+    tablaTipos[Tipo.psychic.getNumVal()] = new double[]{0.5, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 0.5, 1, 0, 1, 2, 1};
+    tablaTipos[Tipo.rock.getNumVal()] = new double[]{0.5, 1, 2, 1, 1, 1, 2, 1, 2, 0.5, 1, 1, 1, 1, 1, 0.5, 1, 2};
+    tablaTipos[Tipo.dark.getNumVal()] = new double[]{1, 1, 1, 1, 1, 2, 1, 0.5, 1, 0.5, 1, 1, 2, 1, 0.5, 1, 1, 1};
+    tablaTipos[Tipo.ground.getNumVal()] = new double[]{2, 1, 0.5, 1, 2, 1, 2, 1, 1, 1, 1, 0.5, 1, 2, 1, 1, 2, 0};
+    tablaTipos[Tipo.poison.getNumVal()] = new double[]{0, 1, 1, 1, 1, 0.5, 1, 2, 1, 1, 1, 2, 1, 0.5, 1, 0.5, 0.5, 2};
+    tablaTipos[Tipo.flying.getNumVal()] = new double[]{0.5, 1, 2, 1, 0.5, 1, 1, 1, 1, 2, 1, 2, 1, 0.5, 1, 1, 1, 1};
 
     }
 

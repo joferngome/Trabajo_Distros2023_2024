@@ -28,7 +28,7 @@ public class Combate_Servidor {
 
                     ArrayList<Tipo> tipos = new ArrayList<Tipo>();
 
-                    tipos.add(Tipo.LUCHA);
+                    tipos.add(Tipo.fighting);
                     
                     
 

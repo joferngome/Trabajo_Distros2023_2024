@@ -6,8 +6,8 @@ public enum Tipo {
 
    
 
-    ACERO(1), AGUA(2), BICHO(3), DRAGÓN(4), ELÉCTRICO(5), FANTASMA(6), FUEGO(7), HADA(8), HIELO(9),
-     LUCHA(10), NORMAL(11), PLANTA(12), PSÍQUICO(13), ROCA(14), SINIESTRO(15), TIERRA(16), VENENO(17), VOLADOR(18);
+    steel(1), water(2), bug(3), dragon(4), electric(5), ghost(6), fire(7), fairy(8), ice(9),
+     fighting(10), normal(11), grass(12), psychic(13), rock(14), dark(15), ground(16), poison(17), flying(18);
 
     private int numVal;
 
@@ -22,24 +22,24 @@ public enum Tipo {
    
     public static ArrayList<Tipo> getTipos() {
         ArrayList<Tipo> tipos = new ArrayList<>();
-        tipos.add(ACERO);
-        tipos.add(AGUA);
-        tipos.add(BICHO);
-        tipos.add(DRAGÓN);
-        tipos.add(ELÉCTRICO);
-        tipos.add(FANTASMA);
-        tipos.add(FUEGO);
-        tipos.add(HADA);
-        tipos.add(HIELO);
-        tipos.add(LUCHA);
-        tipos.add(NORMAL);
-        tipos.add(PLANTA);
-        tipos.add(PSÍQUICO);
-        tipos.add(ROCA);
-        tipos.add(SINIESTRO);
-        tipos.add(TIERRA);
-        tipos.add(VENENO);
-        tipos.add(VOLADOR);
+        tipos.add(steel);
+        tipos.add(water);
+        tipos.add(bug);
+        tipos.add(dragon);
+        tipos.add(electric);
+        tipos.add(ghost);
+        tipos.add(fire);
+        tipos.add(fairy);
+        tipos.add(ice);
+        tipos.add(fighting);
+        tipos.add(normal);
+        tipos.add(grass);
+        tipos.add(psychic);
+        tipos.add(rock);
+        tipos.add(dark);
+        tipos.add(ground);
+        tipos.add(poison);
+        tipos.add(flying);
         return tipos;
     }
 

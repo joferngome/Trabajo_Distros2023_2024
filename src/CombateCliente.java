@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.HttpURLConnection;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class CombateCliente {
@@ -21,20 +23,26 @@ public class CombateCliente {
                     ObjectInputStream ois = new ObjectInputStream(s.getInputStream())){
 
             
-        			URL poke = new URL("https://pokeapi.co/api/v2/pokemon/pikachu");
-        			BufferedReader br = new BufferedReader(new InputStreamReader(poke.openStream()));
+        			URL url_poke = new URL("https://pokeapi.co/api/v2/pokemon/quagsire");
+        			HttpURLConnection connection = (HttpURLConnection) url_poke.openConnection();
+        			connection.setRequestMethod("GET");
+        			
+        			BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 
         			String linea = br.readLine();
         			
-        			JSONObject objpoke = new JSONObject(linea);
+        			JSONObject pokemon_json = new JSONObject(linea);
         			
+        			JSONArray tipos_json = pokemon_json.getJSONArray("types");
                     ArrayList<Tipo> tipos = new ArrayList<Tipo>();
                     
-                    //Promise p = fetch("https://pokeapi.co/api/v2/pokemon/pikachu");
+                    for(int i = 0; i < tipos_json.length(); i++) {
+                    	JSONObject tipo = tipos_json.getJSONObject(i).getJSONObject("type");
+                    	tipos.add(Tipo.valueOf(tipo.getString("name")));
+                    }
 
-                    tipos.add(Tipo.AGUA);
-                    tipos.add(Tipo.TIERRA);
-
+                    System.out.println(tipos.toString());
+                    
                     ArrayList<Attack> ataques = new ArrayList<Attack>();
 
                     ataques.add(new Attack("Roca afilada", 100, 80, 5));
