@@ -1,3 +1,5 @@
+import Tipos.Tipo;
+
 import java.io.Serializable;
 
 public class Attack implements Serializable {
@@ -6,11 +8,14 @@ public class Attack implements Serializable {
 	 private int precision;
 	 private int power_points;
 
-	 public Attack(String name, int power, int precision, int power_points){
+	private Tipo type;
+
+	 public Attack(String name, int power, int precision, int power_points, Tipo type){
 		 this.name = name;
 		 this.power = power;
 		 this.precision = precision;
 		 this.power_points = power_points;
+		 this.type = type;
 
 
 

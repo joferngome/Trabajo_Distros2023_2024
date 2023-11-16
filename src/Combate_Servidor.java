@@ -34,10 +34,10 @@ public class Combate_Servidor {
 
 
                     ArrayList<Attack> ataquesHitmonchan = new ArrayList<>();
-                    Attack a1 = new Attack("Patada giro",100,100,5);
-                    Attack a2 = new Attack("Roca afilada",80,100,5);
-                    Attack a3 = new Attack("Puño hielo",75,100,5);
-                    Attack a4 = new Attack("Puño trueno",75,100,5);
+                    Attack a1 = new Attack("Patada giro",100,100,5, Tipo.fighting);
+                    Attack a2 = new Attack("Roca afilada",80,100,5, Tipo.fighting);
+                    Attack a3 = new Attack("Puño hielo",75,100,5, Tipo.fighting);
+                    Attack a4 = new Attack("Puño trueno",75,100,5, Tipo.fighting);
                     ataquesHitmonchan.add(a1);
                     ataquesHitmonchan.add(a2);
                     ataquesHitmonchan.add(a3);
