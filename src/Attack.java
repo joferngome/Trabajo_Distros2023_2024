@@ -20,6 +20,9 @@ public class Attack implements Serializable {
 
 
 	 }
+
+	 
+
 	 
 	public String getName() {
 		return name;

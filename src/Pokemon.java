@@ -199,6 +199,18 @@ public class Pokemon implements Serializable {
 
 	}
 
+    //Esta vivo
+
+    public boolean isAlive(){
+
+        if(this.health>0){
+            return true;
+        }
+
+        return false;
+
+    }
+
     //Atacar
 
     public int atacar(Pokemon pokemonEnemigo, Attack ataque){
