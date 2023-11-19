@@ -232,6 +232,8 @@ public class Pokemon implements Serializable {
 
                                     //Comprueba cuantos tipos tiene el pokemon
 
+                                    double modificadorTipo=1;
+
                                     if(pokemonEnemigo.getTypes().size()==1){
 
                                         //Comprueba si el ataque es efectivo
@@ -239,18 +241,21 @@ public class Pokemon implements Serializable {
                                         if(tabla.getModificador(ataqueElegido.getType().getNumVal(), pokemonEnemigo.getTypes().get(0).getNumVal())==2){
 
                                             System.out.println("El ataque es muy efectivo");
+                                            modificadorTipo = 2;
 
                                             //Comprueba si el ataque no es efectivo
 
                                         }else if(tabla.getModificador(ataqueElegido.getType().getNumVal(), pokemonEnemigo.getTypes().get(0).getNumVal())==0.5){
 
                                             System.out.println("El ataque no es muy efectivo");
+                                            modificadorTipo = 0.5;
 
                                             //Comprueba si el ataque no hace daño
 
                                         }else if(tabla.getModificador(ataqueElegido.getType().getNumVal(), pokemonEnemigo.getTypes().get(0).getNumVal())==0){
 
                                             System.out.println("El ataque no hace daño");
+                                            modificadorTipo = 0;
 
                                         }
 
@@ -264,24 +269,35 @@ public class Pokemon implements Serializable {
                                         if(tabla.getModificador(ataqueElegido.getType().getNumVal(), pokemonEnemigo.getTypes().get(0).getNumVal(), pokemonEnemigo.getTypes().get(1).getNumVal())==2){
 
                                             System.out.println("El ataque es muy efectivo");
+                                            modificadorTipo = 2;
 
                                             //Comprueba si el ataque no es efectivo
 
                                         }else if(tabla.getModificador(ataqueElegido.getType().getNumVal(), pokemonEnemigo.getTypes().get(0).getNumVal(), pokemonEnemigo.getTypes().get(1).getNumVal())==0.5){
 
                                             System.out.println("El ataque no es muy efectivo");
+                                            modificadorTipo = 0.5;
 
                                             //Comprueba si el ataque no hace daño
 
                                         }else if(tabla.getModificador(ataqueElegido.getType().getNumVal(), pokemonEnemigo.getTypes().get(0).getNumVal(), pokemonEnemigo.getTypes().get(1).getNumVal())==0){
 
                                             System.out.println("El ataque no hace daño");
+                                            modificadorTipo = 0;
 
                                         }
                                     }
 
+                                    
+                                    //Calcula el daño con el modificador de tipo
 
-                                    int dano = (int) (((((2*this.level)/5)+2)*ataqueElegido.getPower()*(this.attack/pokemonEnemigo.getDefense()))/50)+2;
+                                    int dano = (int) ((((((2*this.level)/5)+2)*ataqueElegido.getPower()*(this.attack/pokemonEnemigo.getDefense()))/50)*modificadorTipo);
+
+
+                                    ataqueElegido.setPower_points(ataqueElegido.getPower_points()-1);
+
+
+                                    
 
                                     pokemonEnemigo.setHealth(pokemonEnemigo.getHealth()-dano);
 
