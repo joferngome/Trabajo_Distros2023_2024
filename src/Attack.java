@@ -45,5 +45,9 @@ public class Attack implements Serializable {
 	public void setPower_points(int power_points) {
 		this.power_points = power_points;
 	}
+
+	public Tipo getType() {
+		return this.type;
+	}
 	 
 }

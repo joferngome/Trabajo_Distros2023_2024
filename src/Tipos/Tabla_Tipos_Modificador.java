@@ -40,6 +40,24 @@ public class Tabla_Tipos_Modificador{
 
         
     }
+
+    //  Si un pokemon tiene dos tipos que devuelva el modificador más alto de los dos tipos.
+
+    public double getModificador(int tipoAtacante, int tipoOponente1, int tipoOponente2) {
+
+        double modificador1 = tablaTipos[tipoAtacante][tipoOponente1];
+        double modificador2 = tablaTipos[tipoAtacante][tipoOponente2];
+
+        if(modificador1>modificador2){
+            return modificador1;
+        }
+        else{
+            return modificador2;
+        }
+
+    }
+
+
     
 
 
