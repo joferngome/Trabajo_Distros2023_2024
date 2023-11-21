@@ -54,7 +54,7 @@ public class Pokemon implements Serializable {
 
     public static Pokemon generar_pokemon(String url){
         try{
-            URL url_poke = new URL("https://pokeapi.co/api/v2/pokemon/quagsire");
+            URL url_poke = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) url_poke.openConnection();
             connection.setRequestMethod("GET");
 
@@ -122,7 +122,7 @@ public class Pokemon implements Serializable {
 
 
 
-                if(!clase_move.equals("status")){
+                if(!clase_move.equals("status") | move_json.getJSONObject("power") = null){
                     ataques.add(new Attack(ataque.getString("name"),
                             move_json.getInt("power"),move_json.getInt("accuracy"),
                             move_json.getInt("pp"),Tipo.valueOf(move_json.getJSONObject("type").getString("name"))));

@@ -6,6 +6,8 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import Tipos.Tabla_Tipos_Modificador;
 import Tipos.Tipo;
@@ -23,31 +25,23 @@ public class Combate_Servidor {
                         DataInputStream dis = new DataInputStream(rival.getInputStream());
                         ObjectInputStream ois = new ObjectInputStream(rival.getInputStream());) {
 
-                    ArrayList<Pokemon> pok1 = new ArrayList<>();
-
-                    ArrayList<Tipo> tipos = new ArrayList<Tipo>();
-
-                    tipos.add(Tipo.fighting);
-
-                    ArrayList<Attack> ataquesHitmonchan = new ArrayList<>();
-                    Attack a1 = new Attack("Patada giro", 100, 100, 5, Tipo.fighting);
-                    Attack a2 = new Attack("Roca afilada", 80, 100, 5, Tipo.fighting);
-                    Attack a3 = new Attack("Puño hielo", 75, 100, 5, Tipo.fighting);
-                    Attack a4 = new Attack("Puño trueno", 75, 100, 5, Tipo.fighting);
-                    ataquesHitmonchan.add(a1);
-                    ataquesHitmonchan.add(a2);
-                    ataquesHitmonchan.add(a3);
-                    ataquesHitmonchan.add(a4);
-
-                    Pokemon Hitmonchan = new Pokemon("Hitmonchan", 600, 50, 20, 10000,
-                            tipos, ataquesHitmonchan);
-
-                    pok1.add(Hitmonchan);
-
-                    Equipo_Pokemon eq1 = new Equipo_Pokemon(pok1);
+                    Random r = new Random();
+                    ArrayList<Pokemon> equipArray = new ArrayList<>();
+                    List<Integer> num_usados = new ArrayList<>();
+                    for(int i = 0; i < 6; i++ ) {
+                        int numpoke = r.nextInt(1017);
+                        while (num_usados.contains(numpoke)) {
+                            numpoke = r.nextInt(1017);
+                        }
+                        Pokemon pok1 = Pokemon.generar_pokemon("https://pokeapi.co/api/v2/pokemon/" + numpoke);
+                        equipArray.add(pok1);
+                        num_usados.add(numpoke);
+                        System.out.println(numpoke);
+                    }
 
                     Equipo_Pokemon eqEnemigo = (Equipo_Pokemon) ois.readObject();
 
+                    Equipo_Pokemon eq1 = new Equipo_Pokemon(equipArray);
 
                     while (!eq1.AllDead() && !eqEnemigo.AllDead()) {
 

@@ -24,9 +24,19 @@ public class CombateCliente {
             ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
             ObjectInputStream ois = new ObjectInputStream(s.getInputStream()))
         {
-            Pokemon pok1 = Pokemon.generar_pokemon("https://pokeapi.co/api/v2/pokemon/quagsire");
+            Random r = new Random();
             ArrayList<Pokemon> equipArray = new ArrayList<>();
-            equipArray.add(pok1);
+            List<Integer> num_usados = new ArrayList<>();
+            for(int i = 0; i < 6; i++ ) {
+                int numpoke = r.nextInt(1017);
+                while (num_usados.contains(numpoke)) {
+                    numpoke = r.nextInt(1017);
+                }
+                Pokemon pok1 = Pokemon.generar_pokemon("https://pokeapi.co/api/v2/pokemon/" + numpoke);
+                equipArray.add(pok1);
+                num_usados.add(numpoke);
+                System.out.println(numpoke);
+            }
 
             Equipo_Pokemon eq1 = new Equipo_Pokemon(equipArray);
 
