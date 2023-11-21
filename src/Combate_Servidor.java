@@ -46,9 +46,12 @@ public class Combate_Servidor {
 
                     Equipo_Pokemon eq1 = new Equipo_Pokemon(pok1);
 
-                    while (!eq1.AllDead()) {
+                    Equipo_Pokemon eqEnemigo = (Equipo_Pokemon) ois.readObject();
 
-                        System.out.println("Elige un pokemon para luchar: ");
+
+                    while (!eq1.AllDead() && !eqEnemigo.AllDead()) {
+
+                        System.out.println("Elige un pokemon aliado para luchar: ");
                         for (int i = 0; i < eq1.getEquipo().size(); i++) {
                             System.out.println((i + 1) + " " + eq1.getEquipo().get(i).getName());
                         }
@@ -59,6 +62,31 @@ public class Combate_Servidor {
                         Pokemon pokemonActivo = eq1.getPokemonActivo();
 
                         System.out.println("Entrenador 1 eligió a: " + eq1.getPokemonActivo().getName());
+
+
+                        //Equipo enemigo
+
+                        dos.writeBytes("Elige un pokemon para luchar: \n");
+                        for (int i = 0; i < eqEnemigo.getEquipo().size(); i++) {
+                            dos.writeBytes((i + 1) + " " + eqEnemigo.getEquipo().get(i).getName()+"\n");
+                        }
+
+                        Pokemon pEnemigo = eqEnemigo.getEquipo().get(Integer.parseInt(ois.readLine())-1);
+
+
+
+
+                        // Pokemon Activo
+/*
+eq1.setPokemonActivo(eq1.getEquipo().get(dis.readInt() - 1));
+                        Pokemon pokemonActivo = eq1.getPokemonActivo();
+
+                        System.out.println("Entrenador 1 eligió a: " + eq1.getPokemonActivo().getName());
+ */
+
+
+
+
 
                         Pokemon pokemonEnemigo = ((Equipo_Pokemon) ois.readObject()).getPokemonActivo();
                         int velocidadEnemigo = pokemonEnemigo.getSpeed();

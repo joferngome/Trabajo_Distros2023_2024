@@ -24,7 +24,17 @@ public class CombateCliente {
             ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
             ObjectInputStream ois = new ObjectInputStream(s.getInputStream()))
         {
-            Pokemon.generar_pokemon("https://pokeapi.co/api/v2/pokemon/quagsire");
+            Pokemon pok1 = Pokemon.generar_pokemon("https://pokeapi.co/api/v2/pokemon/quagsire");
+            ArrayList<Pokemon> equipArray = new ArrayList<>();
+            equipArray.add(pok1);
+
+            Equipo_Pokemon eq1 = new Equipo_Pokemon(equipArray);
+
+            oos.writeObject(eq1);
+
+            //Falta cuando me envian los pokemon y tengo que elegir un numero.
+
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
