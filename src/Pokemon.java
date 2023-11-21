@@ -8,10 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -70,6 +67,8 @@ public class Pokemon implements Serializable {
             JSONArray tipos_json = pokemon_json.getJSONArray("types");
             ArrayList<Tipo> tipos = new ArrayList<Tipo>();
 
+            String nombre_poke = pokemon_json.getString("name");
+            System.out.println(nombre_poke);
             for(int i = 0; i < tipos_json.length(); i++) {
                 JSONObject tipo = tipos_json.getJSONObject(i).getJSONObject("type");
                 tipos.add(Tipo.valueOf(tipo.getString("name")));
@@ -121,8 +120,17 @@ public class Pokemon implements Serializable {
                 String clase_move = move_class_json.getString("name");
 
 
+                //Falla el mierdón este cuando power es null en JSON
 
-                if(!clase_move.equals("status") | move_json.getJSONObject("power") = null){
+                Object poder = move_json.get("power") ;
+                System.out.println(ataque.getString("name") + poder);
+
+                if(poder != null){
+                    System.out.println("no soy nulo");
+                }else{
+                    System.out.println("soy nulo");
+                }
+                if(!clase_move.equals("status") || poder != null){
                     ataques.add(new Attack(ataque.getString("name"),
                             move_json.getInt("power"),move_json.getInt("accuracy"),
                             move_json.getInt("pp"),Tipo.valueOf(move_json.getJSONObject("type").getString("name"))));
@@ -132,9 +140,8 @@ public class Pokemon implements Serializable {
                 br_move.close();
                 connection_move.disconnect();
             }
-            System.out.println(ataques.toString());
 
-            Pokemon pokemon = new Pokemon("Quagsire",health,attack,defense,speed, tipos, ataques);
+            Pokemon pokemon = new Pokemon(nombre_poke,health,attack,defense,speed, tipos, ataques);
 
             return pokemon;
 

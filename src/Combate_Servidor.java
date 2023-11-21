@@ -33,11 +33,13 @@ public class Combate_Servidor {
                         while (num_usados.contains(numpoke)) {
                             numpoke = r.nextInt(1017);
                         }
+                        System.out.println(numpoke);
                         Pokemon pok1 = Pokemon.generar_pokemon("https://pokeapi.co/api/v2/pokemon/" + numpoke);
                         equipArray.add(pok1);
                         num_usados.add(numpoke);
-                        System.out.println(numpoke);
                     }
+
+                    System.out.println("genera equipo servidor" + equipArray.size());
 
                     Equipo_Pokemon eqEnemigo = (Equipo_Pokemon) ois.readObject();
 
