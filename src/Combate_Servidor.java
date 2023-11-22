@@ -39,7 +39,7 @@ public class Combate_Servidor {
                         num_usados.add(numpoke);
                     }
 
-                    System.out.println("genera equipo servidor" + equipArray.size());
+                    System.out.println("genera equipo servidor " + equipArray.size());
 
                     Equipo_Pokemon eqEnemigo = (Equipo_Pokemon) ois.readObject();
 

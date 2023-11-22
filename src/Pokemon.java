@@ -123,14 +123,9 @@ public class Pokemon implements Serializable {
                 //Falla el mierdón este cuando power es null en JSON
 
                 Object poder = move_json.get("power") ;
-                System.out.println(ataque.getString("name") + poder);
+                Object precision = move_json.get("accuracy") ;
 
-                if(poder != null){
-                    System.out.println("no soy nulo");
-                }else{
-                    System.out.println("soy nulo");
-                }
-                if(!clase_move.equals("status") || poder != null){
+                if(!clase_move.equals("status") && poder != JSONObject.NULL && precision != JSONObject.NULL){
                     ataques.add(new Attack(ataque.getString("name"),
                             move_json.getInt("power"),move_json.getInt("accuracy"),
                             move_json.getInt("pp"),Tipo.valueOf(move_json.getJSONObject("type").getString("name"))));

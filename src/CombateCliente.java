@@ -24,12 +24,15 @@ public class CombateCliente {
             ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
             ObjectInputStream ois = new ObjectInputStream(s.getInputStream()))
         {
+            System.out.println("cliente entra");
             Random r = new Random();
             ArrayList<Pokemon> equipArray = new ArrayList<>();
             List<Integer> num_usados = new ArrayList<>();
             for(int i = 0; i < 6; i++ ) {
+                System.out.println("cliente bucle " +i);
                 int numpoke = r.nextInt(1017);
                 while (num_usados.contains(numpoke)) {
+                    System.out.println("cliente bucle 2 " +i);
                     numpoke = r.nextInt(1017);
                 }
                 System.out.println(numpoke);
@@ -38,7 +41,7 @@ public class CombateCliente {
                 num_usados.add(numpoke);
             }
 
-            System.out.println("genera equipo cliente" + equipArray.size());
+            System.out.println("genera equipo cliente " + equipArray.size());
 
             Equipo_Pokemon eq1 = new Equipo_Pokemon(equipArray);
 
