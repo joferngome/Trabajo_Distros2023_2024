@@ -19,7 +19,7 @@ import org.json.JSONObject;
 public class CombateCliente {
 
     public static void main(String args[]){
-
+        System.out.println("cliente main");
         try(Socket s = new Socket("localhost",6666);
             ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
             ObjectInputStream ois = new ObjectInputStream(s.getInputStream()))
@@ -51,7 +51,7 @@ public class CombateCliente {
 
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

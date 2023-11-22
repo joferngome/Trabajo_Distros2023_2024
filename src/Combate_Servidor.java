@@ -25,6 +25,8 @@ public class Combate_Servidor {
                         DataInputStream dis = new DataInputStream(rival.getInputStream());
                         ObjectInputStream ois = new ObjectInputStream(rival.getInputStream());) {
 
+                    Equipo_Pokemon eqEnemigo = (Equipo_Pokemon) ois.readObject();
+
                     Random r = new Random();
                     ArrayList<Pokemon> equipArray = new ArrayList<>();
                     List<Integer> num_usados = new ArrayList<>();
@@ -41,7 +43,7 @@ public class Combate_Servidor {
 
                     System.out.println("genera equipo servidor " + equipArray.size());
 
-                    Equipo_Pokemon eqEnemigo = (Equipo_Pokemon) ois.readObject();
+                    //Equipo_Pokemon eqEnemigo = (Equipo_Pokemon) ois.readObject();
 
                     Equipo_Pokemon eq1 = new Equipo_Pokemon(equipArray);
 

@@ -33,12 +33,6 @@ public class Tabla_Tipos_Modificador{
     public double getModificador(int tipoAtacante, int tipoOponente) {
 
         return tablaTipos[tipoAtacante][tipoOponente];
-
-      
-
-   
-
-        
     }
 
     //  Si un pokemon tiene dos tipos que devuelva el modificador más alto de los dos tipos.
