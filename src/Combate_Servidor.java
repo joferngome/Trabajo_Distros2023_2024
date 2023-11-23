@@ -21,11 +21,10 @@ public class Combate_Servidor {
             while (true) {
 
                 try (Socket rival = ss.accept();
-                        DataOutputStream dos = new DataOutputStream(rival.getOutputStream());
-                        DataInputStream dis = new DataInputStream(rival.getInputStream());
+                        ObjectOutputStream dos = new ObjectOutputStream(rival.getOutputStream());
                         ObjectInputStream ois = new ObjectInputStream(rival.getInputStream());) {
 
-                    Equipo_Pokemon eqEnemigo = (Equipo_Pokemon) ois.readObject();
+
 
                     Random r = new Random();
                     ArrayList<Pokemon> equipArray = new ArrayList<>();
@@ -43,7 +42,7 @@ public class Combate_Servidor {
 
                     System.out.println("genera equipo servidor " + equipArray.size());
 
-                    //Equipo_Pokemon eqEnemigo = (Equipo_Pokemon) ois.readObject();
+                    Equipo_Pokemon eqEnemigo = (Equipo_Pokemon) ois.readObject();
 
                     Equipo_Pokemon eq1 = new Equipo_Pokemon(equipArray);
 
@@ -56,7 +55,7 @@ public class Combate_Servidor {
 
                         // Pokemon Activo
 
-                        eq1.setPokemonActivo(eq1.getEquipo().get(dis.readInt() - 1));
+                        eq1.setPokemonActivo(eq1.getEquipo().get(ois.readInt() - 1));
                         Pokemon pokemonActivo = eq1.getPokemonActivo();
 
                         System.out.println("Entrenador 1 eligió a: " + eq1.getPokemonActivo().getName());
@@ -102,7 +101,7 @@ eq1.setPokemonActivo(eq1.getEquipo().get(dis.readInt() - 1));
                                 //Nos mandan el numero del ataque que va a hacer.
 
                                 
-                                Attack ataqueEnemigo = pokemonEnemigo.getAttacks().get(Integer.parseInt(dis.readLine()));
+                                Attack ataqueEnemigo = pokemonEnemigo.getAttacks().get(Integer.parseInt(ois.readLine()));
 
                                 pokemonEnemigo.atacar(pokemonActivo, ataqueEnemigo);
 
@@ -121,7 +120,7 @@ eq1.setPokemonActivo(eq1.getEquipo().get(dis.readInt() - 1));
 
                                 //Elige el ataque
 
-                                Attack ataque = pokemonActivo.getAttacks().get(dis.readInt() - 1);
+                                Attack ataque = pokemonActivo.getAttacks().get(ois.readInt() - 1);
 
                                 //Ataca
 
