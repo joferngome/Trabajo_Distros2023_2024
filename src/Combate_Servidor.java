@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 import Tipos.Tabla_Tipos_Modificador;
 import Tipos.Tipo;
@@ -21,7 +22,7 @@ public class Combate_Servidor {
             while (true) {
 
                 try (Socket rival = ss.accept();
-                        ObjectOutputStream dos = new ObjectOutputStream(rival.getOutputStream());
+                        ObjectOutputStream oos = new ObjectOutputStream(rival.getOutputStream());
                         ObjectInputStream ois = new ObjectInputStream(rival.getInputStream());) {
 
 
@@ -50,12 +51,16 @@ public class Combate_Servidor {
 
                         System.out.println("Elige un pokemon aliado para luchar: ");
                         for (int i = 0; i < eq1.getEquipo().size(); i++) {
+
                             System.out.println((i + 1) + " " + eq1.getEquipo().get(i).getName());
                         }
 
                         // Pokemon Activo
 
-                        eq1.setPokemonActivo(eq1.getEquipo().get(ois.readInt() - 1));
+                        Scanner s1 = new Scanner(System.in);
+
+                        eq1.setPokemonActivo(eq1.getEquipo().get(Integer.parseInt(s1.nextLine())-1));
+
                         Pokemon pokemonActivo = eq1.getPokemonActivo();
 
                         System.out.println("Entrenador 1 eligió a: " + eq1.getPokemonActivo().getName());
@@ -63,12 +68,14 @@ public class Combate_Servidor {
 
                         //Equipo enemigo
 
-                        dos.writeBytes("Elige un pokemon para luchar: \n");
+                        oos.writeBytes("Elige un pokemon para luchar: \n");
                         for (int i = 0; i < eqEnemigo.getEquipo().size(); i++) {
-                            dos.writeBytes((i + 1) + " " + eqEnemigo.getEquipo().get(i).getName()+"\n");
+                            oos.writeBytes((i + 1) + " " + eqEnemigo.getEquipo().get(i).getName()+"\n");
                         }
 
                         Pokemon pEnemigo = eqEnemigo.getEquipo().get(Integer.parseInt(ois.readLine())-1);
+
+                        System.out.println("Se ha elegido: "+pEnemigo.getName());
 
 
 
