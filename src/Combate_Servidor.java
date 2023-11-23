@@ -24,13 +24,10 @@ public class Combate_Servidor {
                 try (Socket rival = ss.accept();
                         ObjectOutputStream oos = new ObjectOutputStream(rival.getOutputStream());
                         ObjectInputStream ois = new ObjectInputStream(rival.getInputStream());) {
-
-
-
                     Random r = new Random();
                     ArrayList<Pokemon> equipArray = new ArrayList<>();
                     List<Integer> num_usados = new ArrayList<>();
-                    for(int i = 0; i < 6; i++ ) {
+                    for(int i = 0; i < 1; i++ ) {//lo he cambiado a 1 por simplificar
                         int numpoke = r.nextInt(1017);
                         while (num_usados.contains(numpoke)) {
                             numpoke = r.nextInt(1017);
@@ -69,6 +66,8 @@ public class Combate_Servidor {
                         //Equipo enemigo
 
                         oos.writeBytes("Elige un pokemon para luchar: \n");
+
+                        System.out.println("manda elegir");
                         for (int i = 0; i < eqEnemigo.getEquipo().size(); i++) {
                             oos.writeBytes((i + 1) + " " + eqEnemigo.getEquipo().get(i).getName()+"\n");
                         }
