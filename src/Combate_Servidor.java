@@ -27,7 +27,7 @@ public class Combate_Servidor {
                     Random r = new Random();
                     ArrayList<Pokemon> equipArray = new ArrayList<>();
                     List<Integer> num_usados = new ArrayList<>();
-                    for(int i = 0; i < 1; i++ ) {//lo he cambiado a 1 por simplificar
+                    for(int i = 0; i < 6; i++ ) {//lo he cambiado a 1 por simplificar
                         int numpoke = r.nextInt(1017);
                         while (num_usados.contains(numpoke)) {
                             numpoke = r.nextInt(1017);
@@ -65,14 +65,14 @@ public class Combate_Servidor {
 
                         //Equipo enemigo
 
-                        oos.writeBytes("Elige un pokemon para luchar: \n");
+                        oos.writeObject("Elige un pokemon para luchar: \n");
 
                         System.out.println("manda elegir");
                         for (int i = 0; i < eqEnemigo.getEquipo().size(); i++) {
-                            oos.writeBytes((i + 1) + " " + eqEnemigo.getEquipo().get(i).getName()+"\n");
+                            oos.writeObject((i + 1) + " " + eqEnemigo.getEquipo().get(i).getName()+"\n");
                         }
 
-                        Pokemon pEnemigo = eqEnemigo.getEquipo().get(Integer.parseInt(ois.readLine())-1);
+                        Pokemon pEnemigo = eqEnemigo.getEquipo().get((int)ois.readObject()-1);
 
                         System.out.println("Se ha elegido: "+pEnemigo.getName());
 

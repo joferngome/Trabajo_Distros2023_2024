@@ -29,7 +29,7 @@ public class CombateCliente {
             Random r = new Random();
             ArrayList<Pokemon> equipArray = new ArrayList<>();
             List<Integer> num_usados = new ArrayList<>();
-            for(int i = 0; i < 1; i++ ) {//lo he cambiado a 1 por simplificar
+            for(int i = 0; i < 6; i++ ) {//lo he cambiado a 1 por simplificar
 
                 int numpoke = r.nextInt(1017);
                 while (num_usados.contains(numpoke)) {
@@ -51,12 +51,12 @@ public class CombateCliente {
             System.out.println("ha mandado equipo");
             //Recibe mensaje elige un pokemon para luchar:
             System.out.println("espera elegir poke");
-            System.out.println(ois.readLine());
+            System.out.println((String) ois.readObject());
             System.out.println("recibe elegir poke");
 
-            for(int i=0;i<1;i++){ //lo he cambiado a 1 por simplificar
+            for(int i = 0; i < 6; i++){ //lo he cambiado a 1 por simplificar
                 //Mostrar los pokemon disponibles
-                System.out.println(ois.readLine());
+                System.out.println((String) ois.readObject());
                 System.out.println("elegir poke");
             }
 
@@ -65,12 +65,14 @@ public class CombateCliente {
             System.out.println("Introduce el numero del pokemon a elegir: ");
             Scanner s1 = new Scanner(System.in);
 
-            oos.writeBytes(s1.nextLine());
+            oos.writeObject(s1.nextInt());
 
             //Falta cuando me envian los pokemon y tengo que elegir un numero.
 
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
