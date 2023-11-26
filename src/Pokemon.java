@@ -223,28 +223,16 @@ public class Pokemon implements Serializable {
 
         //Esto en verdad estaría mejor en el servidor y pasar como parámetro el ataque elegido (cambiar nombre param)
 
-        System.out.println("Elige un ataque: ");
-        for(int i = 0; i < this.getAttacks().size(); i++){
-            System.out.println((i+1) + " " + this.getAttacks().get(i).getName());
-        }
+        
 
-        //Ataque elegido
-
-        Scanner s1 = new Scanner(System.in);
-        int nataqueElegido = s1.nextInt();
-
-        Attack ataqueElegido = this.getAttacks().get(nataqueElegido-1);
-
-        //Hasta aquí nos lo podemos fumar y ponerlo en el servidor/cliente
-
-
-        //Comprobamos si el ataque tiene PP
-
-        if(ataqueElegido.getPower_points() > 0){
+        if(ataque.getPower_points() > 0){
 
             //Comprobamos si el ataque acierta
+            
+            //sout precision del ataque
+            System.out.println("La precision del ataque es: "+ataque.getPrecision());
 
-            if(ataqueElegido.getPrecision() >= (int) (Math.random()*100)){
+            if(ataque.getPrecision() >= (int) (Math.random()*100)){
 
                 Tabla_Tipos_Modificador tabla = new Tabla_Tipos_Modificador();
 
@@ -255,15 +243,15 @@ public class Pokemon implements Serializable {
                 double modificadorTipo = 1;
 
                 for(int i = 0; i < pokemonEnemigo.getTypes().size();i++){
-                    modificadorTipo *= tabla.getModificador(ataqueElegido.getType().getNumVal(), pokemonEnemigo.getTypes().get(i).getNumVal());
+                    modificadorTipo *= tabla.getModificador(ataque.getType().getNumVal()-1, pokemonEnemigo.getTypes().get(i).getNumVal()-1);
                 }
 
 
                 //Calcula el daño con el modificador de tipo
 
-                int dano = (int) ((((((2*this.level)/5)+2)*ataqueElegido.getPower()*(this.attack/pokemonEnemigo.getDefense()))/50)*modificadorTipo);
+                int dano = (int) ((((((2.0*this.level)/5)+2)*ataque.getPower()*(this.attack/(double)pokemonEnemigo.getDefense()))/50)*modificadorTipo);
 
-                ataqueElegido.setPower_points(ataqueElegido.getPower_points()-1);
+                ataque.setPower_points(ataque.getPower_points()-1);
 
                 pokemonEnemigo.setHealth(pokemonEnemigo.getHealth()-dano);
                 damage = dano;
@@ -272,10 +260,11 @@ public class Pokemon implements Serializable {
             //Ataca al pokemon enemigo
             else{
                 System.out.println("El ataque falló");
-                ataqueElegido.setPower_points(ataqueElegido.getPower_points()-1);
+                ataque.setPower_points(ataque.getPower_points()-1);
             }
 
         }
+        System.out.println("El ataque "+ataque.getName()+ " de "+this.getName()+" ha hecho "+damage+" de daño contra "+pokemonEnemigo.getName()+"\n");
         return damage;
     }
 

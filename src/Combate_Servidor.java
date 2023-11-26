@@ -73,6 +73,7 @@ public class Combate_Servidor {
                         }
 
                         Pokemon pEnemigo = eqEnemigo.getEquipo().get((int)ois.readObject()-1);
+                        eqEnemigo.setPokemonActivo(pEnemigo);
 
                         System.out.println("Se ha elegido: "+pEnemigo.getName());
 
@@ -91,10 +92,12 @@ eq1.setPokemonActivo(eq1.getEquipo().get(dis.readInt() - 1));
 
 
 
-                        Pokemon pokemonEnemigo = ((Equipo_Pokemon) ois.readObject()).getPokemonActivo();
+                        Pokemon pokemonEnemigo = eqEnemigo.getPokemonActivo();
                         int velocidadEnemigo = pokemonEnemigo.getSpeed();
+                        System.out.println("Llego aqui antes del combate");
 
                         while (pokemonActivo.isAlive() && pokemonEnemigo.isAlive()) {
+                            System.out.println("Los dos vivos");
 
                             
 
@@ -102,12 +105,23 @@ eq1.setPokemonActivo(eq1.getEquipo().get(dis.readInt() - 1));
                             // entrenador 1
 
                             if (velocidadEnemigo > eq1.getPokemonActivo().getSpeed()) {
+                                System.out.println("aTACA EL ENEMIGO");
                                 //Primero me atacan luego ataco.
 
                                 //Nos mandan el numero del ataque que va a hacer.
 
+                                oos.writeObject("Atacas");
+
+                                //Enviar ataques por oos
                                 
-                                Attack ataqueEnemigo = pokemonEnemigo.getAttacks().get(Integer.parseInt(ois.readLine()));
+
+                                for (int i = 0; i < pokemonActivo.getAttacks().size(); i++) {
+                                    oos.writeObject((i + 1) + " " + pokemonActivo.getAttacks().get(i).getName()+"\n");
+                                }
+
+                                
+                                Attack ataqueEnemigo = pokemonEnemigo.getAttacks().get((Integer )ois.readObject()-1);
+                                System.out.println("El pokemon enemigo ha usado: "+ataqueEnemigo.getName());
 
                                 pokemonEnemigo.atacar(pokemonActivo, ataqueEnemigo);
 
@@ -116,6 +130,7 @@ eq1.setPokemonActivo(eq1.getEquipo().get(dis.readInt() - 1));
                             }
 
                             else {
+                                System.out.println("Ataca el jugador");
 
                                 //Mostrar ataques entrenador 1
 
@@ -125,8 +140,11 @@ eq1.setPokemonActivo(eq1.getEquipo().get(dis.readInt() - 1));
                                 }
 
                                 //Elige el ataque
+                                
+                                Scanner s2 = new Scanner(System.in);
 
-                                Attack ataque = pokemonActivo.getAttacks().get(ois.readInt() - 1);
+
+                                Attack ataque = pokemonActivo.getAttacks().get(s2.nextInt() - 1);
 
                                 //Ataca
 

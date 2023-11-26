@@ -20,6 +20,7 @@ import org.json.JSONObject;
 public class CombateCliente {
 
     public static void main(String args[]){
+        boolean salir = false;
         System.out.println("cliente main");
         try(Socket s = new Socket("localhost",6666);
             ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
@@ -69,6 +70,26 @@ public class CombateCliente {
 
             //Falta cuando me envian los pokemon y tengo que elegir un numero.
 
+            while(!salir){
+
+                if(((String)ois.readObject()).equals("Atacas")){
+
+                    //Recibir ataques por ois
+                    System.out.println("Ataques: ");
+                    
+                    for(int i=0;i<4;i++){
+                        System.out.println((String)ois.readObject());
+
+                    }
+                    System.out.println("Elige un ataque: ");
+                    Scanner s2 = new Scanner(System.in);
+                    oos.writeObject(s2.nextInt());
+                    System.out.println("He atacado");
+                }
+
+
+            }
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -76,4 +97,6 @@ public class CombateCliente {
             e.printStackTrace();
         }
     }
-}
+
+    }
+
