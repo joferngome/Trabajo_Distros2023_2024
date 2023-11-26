@@ -54,7 +54,7 @@ public class CombateCliente {
 
             for(int i = 0; i < 6; i++){
                 //Mostrar los pokemon disponibles
-                System.out.println((String) ois.readObject());
+                System.out.print((String) ois.readObject());
             }
 
             //Elegir numero de Pokemon:

@@ -44,67 +44,94 @@ public class Combate_Servidor {
 
                     Equipo_Pokemon eq1 = new Equipo_Pokemon(equipArray);
 
-                    while (!eq1.AllDead() && !eqEnemigo.AllDead()) {
+                    // Pokemon Activo
+                    Pokemon pokemonActivo = elegir_pokemon(eq1);
 
-                        System.out.println("Elige un pokemon aliado para luchar: ");
-                        for (int i = 0; i < eq1.getEquipo().size(); i++) {
+                    //Equipo enemigo
 
-                            System.out.println((i + 1) + " " + eq1.getEquipo().get(i).getName());
-                        }
+                    oos.writeObject("Elige un pokemon para luchar: \n");
 
-                        // Pokemon Activo
+                    for (int i = 0; i < eqEnemigo.getEquipo().size(); i++) {
+                        oos.writeObject((i + 1) + " " + eqEnemigo.getEquipo().get(i).getName()+"\n");
+                    }
 
-                        Scanner s1 = new Scanner(System.in);
+                    Pokemon pEnemigo = eqEnemigo.getEquipo().get((int)ois.readObject()-1);
+                    eqEnemigo.setPokemonActivo(pEnemigo);
 
-                        eq1.setPokemonActivo(eq1.getEquipo().get(Integer.parseInt(s1.nextLine())-1));
+                    System.out.println("Se ha elegido: "+pEnemigo.getName());
+                    int opcion_turno = 0;
 
-                        Pokemon pokemonActivo = eq1.getPokemonActivo();
-
-                        System.out.println("Entrenador 1 eligió a: " + eq1.getPokemonActivo().getName());
-
-
-                        //Equipo enemigo
-
-                        oos.writeObject("Elige un pokemon para luchar: \n");
-
-                        for (int i = 0; i < eqEnemigo.getEquipo().size(); i++) {
-                            oos.writeObject((i + 1) + " " + eqEnemigo.getEquipo().get(i).getName()+"\n");
-                        }
-
-                        Pokemon pEnemigo = eqEnemigo.getEquipo().get((int)ois.readObject()-1);
-                        eqEnemigo.setPokemonActivo(pEnemigo);
-
-                        System.out.println("Se ha elegido: "+pEnemigo.getName());
-
-
-
-
-                        // Pokemon Activo
-/*
-eq1.setPokemonActivo(eq1.getEquipo().get(dis.readInt() - 1));
-                        Pokemon pokemonActivo = eq1.getPokemonActivo();
-
-                        System.out.println("Entrenador 1 eligió a: " + eq1.getPokemonActivo().getName());
- */
-
-
-
-
+                    while (!eq1.AllDead() && !eqEnemigo.AllDead() && opcion_turno != 3) {
 
                         Pokemon pokemonEnemigo = eqEnemigo.getPokemonActivo();
+
                         int velocidadEnemigo = pokemonEnemigo.getSpeed();
-                        System.out.println("Llego aqui antes del combate");
+
+                        //Estrucura de cada turno
+
+                        //1. Elegir opción (cambiar pokemon, usar ataque)
+                        //2. Mandar opción elegida
+                        //3. Si la opción es cambiar, se ejecta lo primero, sino se comprueba velocidad y se ataca.
+
+
+
+                        //Si atacan los 2
+                        //Comprobar velocidades
+                        //Ejecutar ataque del más rápido
+                        //Si no mata, ejecutar ataque del más lento
+                        //comprobar si mata
+
+
+                        //Si cambian pokemon
+                        //mostrar menu elegir pokemon
+                        //hacer el cambio de pokemon activo
+                        //comprobar si el otro ataca o cambia tambien
+                        //si ataca ejecutar ataque
+                        //si cambia cambiar pokemon activo enemigo.
+
+                        //repetir turno
+
+
+                        //comento esto porque mejor hacerlo ya directamente con interfaz gráfica y botones.
+
+                        /*
+                        System.out.println("1. Atacar");
+                        System.out.println("2. Cambiar de pokemon");
+                        System.out.println("3. Rendirse");
+
+                        Scanner s1 = new Scanner(System.in);
+                        opcion_turno = s1.nextInt();
+
+                        if(opcion_turno == 1){
+                            elegir_pokemon(eq1);
+                        }else if(opcion_turno == 2){
+
+
+
+
+                            //Mandar opciones
+                            oos.writeObject("Atacas");
+
+                            for (int i = 0; i < pokemonActivo.getAttacks().size(); i++) {
+                                oos.writeObject((i + 1) + " " + pokemonActivo.getAttacks().get(i).getName()+"\n");
+                            }
+
+                            Attack ataqueEnemigo = pokemonEnemigo.getAttacks().get((Integer )ois.readObject()-1);
+                            pokemonEnemigo.atacar(pokemonActivo, ataqueEnemigo);
+
+                            Attack ataque = elegir_ataque(pokemonActivo);
+
+                            pokemonActivo.atacar(pokemonEnemigo, ataque);
+                        }
+
+
+
 
                         while (pokemonActivo.isAlive() && pokemonEnemigo.isAlive()) {
-                            System.out.println("Los dos vivos");
-
-                            
-
                             // Comprobamos si el pokemon enemigo es mas rapido que el pokemon activo del
                             // entrenador 1
-
                             if (velocidadEnemigo > eq1.getPokemonActivo().getSpeed()) {
-                                System.out.println("aTACA EL ENEMIGO");
+                                System.out.println("ATACA EL ENEMIGO");
                                 //Primero me atacan luego ataco.
 
                                 //Nos mandan el numero del ataque que va a hacer.
@@ -152,9 +179,7 @@ eq1.setPokemonActivo(eq1.getEquipo().get(dis.readInt() - 1));
 
                             }
 
-                        }
-                        
-                        //Aqui habra q cambiar de pokemon activo xq significa que alguno de los 2 ha muerto.
+                        }*/
 
                     }
 
@@ -170,4 +195,38 @@ eq1.setPokemonActivo(eq1.getEquipo().get(dis.readInt() - 1));
         }
     }
 
+    private static Pokemon elegir_pokemon(Equipo_Pokemon equipo){
+        //Elegir el pokemon con el que abrir el combate
+
+        ArrayList<Pokemon> equipoDisponible = equipo.getEquipoDisponible();
+        System.out.println("Elige un pokemon aliado para luchar: ");
+
+        for (int i = 0; i < equipoDisponible.size(); i++) {
+
+            System.out.println((i + 1) + " " + equipoDisponible.get(i).getName());
+        }
+
+        Scanner s1 = new Scanner(System.in);
+
+        equipo.setPokemonActivo(equipo.getEquipo().get(s1.nextInt()-1));
+
+        System.out.println("Entrenador 1 eligió a: " + equipo.getPokemonActivo().getName());
+
+        return equipo.getPokemonActivo();
+    }
+    private static Attack elegir_ataque(Pokemon pokemonActivo){
+        System.out.println("Ataca el jugador");
+
+        //Mostrar ataques entrenador 1
+
+        System.out.println("Elige un ataque: ");
+        for (int i = 0; i < pokemonActivo.getAttacks().size(); i++) {
+            System.out.println((i + 1) + " " + pokemonActivo.getAttacks().get(i).getName());
+        }
+
+        //Elige el ataque
+        Scanner s = new Scanner(System.in);
+
+        return pokemonActivo.getAttacks().get(s.nextInt() - 1);
+    }
 }

@@ -86,10 +86,18 @@ public class Pokemon implements Serializable {
             int spe_attack = stats_json.getJSONObject(3).getInt("base_stat");
             int spe_defense = stats_json.getJSONObject(4).getInt("base_stat");
             int speed = stats_json.getJSONObject(5).getInt("base_stat");
-            int level =  1 + (int)(Math.random() * ((100 - 1) + 1));
+
+            int level =  100;
 
             attack = Math.max(attack, spe_attack);
             defense = Math.max(defense, spe_defense);
+
+            //Recálculo de stats para adecuarlas al nivel 100.
+
+            health = 10 + (health * 2) + level;
+            attack = 5 + (attack * 2);
+            defense = 5 + (defense * 2);
+            speed = 5 + (speed * 2);
 
 
             JSONArray ataques_json = pokemon_json.getJSONArray("moves");
@@ -270,5 +278,12 @@ public class Pokemon implements Serializable {
         return damage;
     }
 
-
+    @Override
+    public boolean equals(Object pokemon) {
+        if(this.name.equals(((Pokemon) pokemon).name)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

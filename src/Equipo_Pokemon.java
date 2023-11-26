@@ -21,17 +21,30 @@ public class Equipo_Pokemon implements Serializable {
                 return false;
 
             }
-
-            
-            
         }
-
         return true;
-
     }
 
     public ArrayList<Pokemon> getEquipo() {
         return equipo;
+    }
+
+    public ArrayList<Pokemon> getEquipoDisponible() {
+        ArrayList<Pokemon> equipo_disponible = new ArrayList<>();
+
+        for (Pokemon pokemon : equipo) {
+            if(pokemonActivo != null){
+                if(pokemon.getHealth() > 0 && !pokemonActivo.equals(pokemon)){
+                    equipo_disponible.add(pokemon);
+                }
+            }else{
+                if(pokemon.getHealth() > 0){
+                    equipo_disponible.add(pokemon);
+                }
+            }
+
+        }
+        return equipo_disponible;
     }
 
     //Set Pokemon activo
