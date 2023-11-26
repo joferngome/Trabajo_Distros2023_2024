@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.*;
+import java.util.random.RandomGenerator;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,11 +35,12 @@ public class Pokemon implements Serializable {
 
 
 
-    public Pokemon(String name, int health, int attack , int defense, int speed, ArrayList<Tipo> types, ArrayList<Attack> attacks ){
+    public Pokemon(String name, int health, int attack , int defense, int speed, ArrayList<Tipo> types, ArrayList<Attack> attacks, int level){
         this.name = name;
         this.maxHealth = health;
         this.health = health;
         this.types = types; 
+        this.level = level;
 
         this.setDefense(defense);
         this.setSpeed(speed);
@@ -83,6 +85,7 @@ public class Pokemon implements Serializable {
             int spe_attack = stats_json.getJSONObject(3).getInt("base_stat");
             int spe_defense = stats_json.getJSONObject(4).getInt("base_stat");
             int speed = stats_json.getJSONObject(5).getInt("base_stat");
+            int level =  1 + (int)(Math.random() * ((100 - 1) + 1));
 
             attack = Math.max(attack, spe_attack);
             defense = Math.max(defense, spe_defense);
@@ -136,7 +139,7 @@ public class Pokemon implements Serializable {
                 connection_move.disconnect();
             }
 
-            Pokemon pokemon = new Pokemon(nombre_poke,health,attack,defense,speed, tipos, ataques);
+            Pokemon pokemon = new Pokemon(nombre_poke,health,attack,defense,speed, tipos, ataques, level);
 
             return pokemon;
 
