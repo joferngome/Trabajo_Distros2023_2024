@@ -37,17 +37,18 @@ public class Pokemon implements Serializable {
 
     public Pokemon(String name, int health, int attack , int defense, int speed, ArrayList<Tipo> types, ArrayList<Attack> attacks, int level){
         this.name = name;
+
         this.maxHealth = health;
         this.health = health;
+        this.attack = attack;
+        this.defense = defense;
+        this.speed = speed;
+
         this.types = types; 
         this.level = level;
 
-        this.setDefense(defense);
-        this.setSpeed(speed);
         this.attacks = attacks;
 
-
-        
         count++;
     }
 
@@ -122,8 +123,6 @@ public class Pokemon implements Serializable {
 
                 String clase_move = move_class_json.getString("name");
 
-
-                //Falla el mierdón este cuando power es null en JSON
 
                 Object poder = move_json.get("power") ;
                 Object precision = move_json.get("accuracy") ;
