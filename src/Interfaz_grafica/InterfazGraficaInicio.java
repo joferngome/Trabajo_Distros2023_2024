@@ -21,33 +21,28 @@ public class InterfazGraficaInicio extends JFrame implements ActionListener {
     public InterfazGraficaInicio() {
         super("Combate pokemon");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(640, 440);
+        setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // Agregamos los botones
         salir = new JButton("Salir");
         generarEquipo = new JButton("Generar equipo aleatorio");
         elegirEquipo = new JButton("Elegir equipo");
 
-        // Agregamos los listeners
         salir.addActionListener(this);
         generarEquipo.addActionListener(this);
         elegirEquipo.addActionListener(this);
 
-        // Agregamos los botones al panel
         panel = new JPanel();
         panel.add(generarEquipo);
         panel.add(elegirEquipo);
         panel.add(salir);
-        // Agregamos el panel a la ventana
+
         add(panel, BorderLayout.SOUTH);
 
-        // Cargamos la imagen de fondo
-        ImageIcon icono = new ImageIcon(getClass().getResource("./portada.png"));
+        ImageIcon icono = new ImageIcon(getClass().getResource("portada.png"));
         imagenFondo = icono.getImage();
 
-        // Agregamos un panel para la imagen de fondo
        JPanel panelImagen = new JPanel() {
            private static final long serialVersionUID = 1L;
 
@@ -59,7 +54,7 @@ public class InterfazGraficaInicio extends JFrame implements ActionListener {
        };
         panelImagen.setPreferredSize(new Dimension(500, 300));
         add(panelImagen, BorderLayout.CENTER);
-
+        this.pack();
         setVisible(true);
     }
 
@@ -68,6 +63,8 @@ public class InterfazGraficaInicio extends JFrame implements ActionListener {
         if (e.getSource() == salir) {
             System.exit(0);
         } else if (e.getSource() == generarEquipo) {
+            InterfazGenerarEquipo ige = new InterfazGenerarEquipo(this);
+            this.setVisible(false);
             System.out.println("generar equipo");
         } else if (e.getSource() == elegirEquipo) {
             System.out.println("elegir equipo");
