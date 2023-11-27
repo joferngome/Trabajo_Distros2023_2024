@@ -1,21 +1,16 @@
-import Tipos.Tipo;
+import Interfaz_grafica.InterfazGraficaInicio;
+import Pokemon.Pokemon;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.HttpURLConnection;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import Pokemon.*;
 
 public class CombateCliente {
 
@@ -26,8 +21,9 @@ public class CombateCliente {
             ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
             ObjectInputStream ois = new ObjectInputStream(s.getInputStream()))
         {
-
-            Random r = new Random();
+            //Lo he comentado para probar la interfaz grafica, si quieres probarlo por consola descomentalo y comenta esta línea. Descomenta el catch también
+            InterfazGraficaInicio in = new InterfazGraficaInicio(s);
+            /*Random r = new Random();
             ArrayList<Pokemon> equipArray = new ArrayList<>();
             List<Integer> num_usados = new ArrayList<>();
             for(int i = 0; i < 6; i++ ) {
@@ -57,7 +53,7 @@ public class CombateCliente {
                 System.out.print((String) ois.readObject());
             }
 
-            //Elegir numero de Pokemon:
+            //Elegir numero de Pokemon.Pokemon:
 
             System.out.println("Introduce el numero del pokemon a elegir: ");
             Scanner s1 = new Scanner(System.in);
@@ -84,14 +80,14 @@ public class CombateCliente {
                 }
 
 
-            }
+            }*/
 
 
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } /*catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     }

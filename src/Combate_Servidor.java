@@ -1,5 +1,3 @@
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -10,8 +8,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import Tipos.Tabla_Tipos_Modificador;
-import Tipos.Tipo;
+import Interfaz_grafica.InterfazGraficaInicio;
+import Pokemon.*;
 
 public class Combate_Servidor {
 
@@ -24,7 +22,12 @@ public class Combate_Servidor {
                 try (Socket rival = ss.accept();
                         ObjectOutputStream oos = new ObjectOutputStream(rival.getOutputStream());
                         ObjectInputStream ois = new ObjectInputStream(rival.getInputStream());) {
-                    Random r = new Random();
+
+                    //Lo he comentado para probar la interfaz grafica, si quieres probarlo por consola descomentalo y comenta esta línea. Descomenta el catch también
+                    InterfazGraficaInicio in = new InterfazGraficaInicio(rival);
+
+                    //Generar equipo
+                    /*Random r = new Random();
                     ArrayList<Pokemon> equipArray = new ArrayList<>();
                     List<Integer> num_usados = new ArrayList<>();
                     for(int i = 0; i < 6; i++ ) {
@@ -44,12 +47,12 @@ public class Combate_Servidor {
 
                     Equipo_Pokemon eq1 = new Equipo_Pokemon(equipArray);
 
-                    // Pokemon Activo
+                    // Pokemon.Pokemon Activo
                     Pokemon pokemonActivo = elegir_pokemon(eq1);
 
-                    //Equipo enemigo
+                    //Equipo enemigo*/
 
-                    oos.writeObject("Elige un pokemon para luchar: \n");
+                    /* oos.writeObject("Elige un pokemon para luchar: \n");
 
                     for (int i = 0; i < eqEnemigo.getEquipo().size(); i++) {
                         oos.writeObject((i + 1) + " " + eqEnemigo.getEquipo().get(i).getName()+"\n");
@@ -116,10 +119,10 @@ public class Combate_Servidor {
                                 oos.writeObject((i + 1) + " " + pokemonActivo.getAttacks().get(i).getName()+"\n");
                             }
 
-                            Attack ataqueEnemigo = pokemonEnemigo.getAttacks().get((Integer )ois.readObject()-1);
+                            Pokemon.Attack ataqueEnemigo = pokemonEnemigo.getAttacks().get((Integer )ois.readObject()-1);
                             pokemonEnemigo.atacar(pokemonActivo, ataqueEnemigo);
 
-                            Attack ataque = elegir_ataque(pokemonActivo);
+                            Pokemon.Attack ataque = elegir_ataque(pokemonActivo);
 
                             pokemonActivo.atacar(pokemonEnemigo, ataque);
                         }
@@ -146,7 +149,7 @@ public class Combate_Servidor {
                                 }
 
                                 
-                                Attack ataqueEnemigo = pokemonEnemigo.getAttacks().get((Integer )ois.readObject()-1);
+                                Pokemon.Attack ataqueEnemigo = pokemonEnemigo.getAttacks().get((Integer )ois.readObject()-1);
                                 System.out.println("El pokemon enemigo ha usado: "+ataqueEnemigo.getName());
 
                                 pokemonEnemigo.atacar(pokemonActivo, ataqueEnemigo);
@@ -170,7 +173,7 @@ public class Combate_Servidor {
                                 Scanner s2 = new Scanner(System.in);
 
 
-                                Attack ataque = pokemonActivo.getAttacks().get(s2.nextInt() - 1);
+                                Pokemon.Attack ataque = pokemonActivo.getAttacks().get(s2.nextInt() - 1);
 
                                 //Ataca
 
@@ -179,14 +182,13 @@ public class Combate_Servidor {
 
                             }
 
-                        }*/
+                        }
 
-                    }
+                    }*/
 
-                } catch (ClassNotFoundException e) {
-                    // TODO Auto-generated catch block
+                } /*catch (ClassNotFoundException e) {
                     e.printStackTrace();
-                }
+                }*/
 
             }
 

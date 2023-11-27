@@ -1,4 +1,4 @@
-//Class Pokemon
+package Pokemon;//Class Pokemon.Pokemon
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +9,6 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.*;
-import java.util.random.RandomGenerator;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,7 +23,10 @@ public class Pokemon implements Serializable {
     private int attack;
     private int defense;
     private int speed;
-    
+
+    private String sprite_front;
+    private String sprite_back;
+
     int level;
     int maxHealth;
     private ArrayList<Tipo> types;
@@ -35,7 +37,7 @@ public class Pokemon implements Serializable {
 
 
 
-    public Pokemon(String name, int health, int attack , int defense, int speed, ArrayList<Tipo> types, ArrayList<Attack> attacks, int level){
+    public Pokemon(String name, int health, int attack , int defense, int speed, ArrayList<Tipo> types, ArrayList<Attack> attacks, int level, String sprite_front, String sprite_back){
         this.name = name;
 
         this.maxHealth = health;
@@ -48,6 +50,9 @@ public class Pokemon implements Serializable {
         this.level = level;
 
         this.attacks = attacks;
+
+        this.sprite_front = sprite_front;
+        this.sprite_back = sprite_back;
 
         count++;
     }
@@ -79,6 +84,8 @@ public class Pokemon implements Serializable {
 
             System.out.println(tipos.toString());
 
+            //Obtención de Stats
+
             JSONArray stats_json = pokemon_json.getJSONArray("stats");
             int health = stats_json.getJSONObject(0).getInt("base_stat");
             int attack = stats_json.getJSONObject(1).getInt("base_stat");
@@ -98,6 +105,12 @@ public class Pokemon implements Serializable {
             attack = 5 + (attack * 2);
             defense = 5 + (defense * 2);
             speed = 5 + (speed * 2);
+
+            //Obtención de Sprites
+            JSONObject sprites_json = pokemon_json.getJSONObject("sprites");
+
+            String back = sprites_json.getString("back_default");
+            String front = sprites_json.getString("front_default");
 
 
             JSONArray ataques_json = pokemon_json.getJSONArray("moves");
@@ -146,7 +159,7 @@ public class Pokemon implements Serializable {
                 connection_move.disconnect();
             }
 
-            Pokemon pokemon = new Pokemon(nombre_poke,health,attack,defense,speed, tipos, ataques, level);
+            Pokemon pokemon = new Pokemon(nombre_poke,health,attack,defense,speed, tipos, ataques, level, front, back);
 
             return pokemon;
 
@@ -229,11 +242,6 @@ public class Pokemon implements Serializable {
 
         //Elige un ataque del pokemon activo
         int damage = 0;
-
-
-        //Esto en verdad estaría mejor en el servidor y pasar como parámetro el ataque elegido (cambiar nombre param)
-
-        
 
         if(ataque.getPower_points() > 0){
 

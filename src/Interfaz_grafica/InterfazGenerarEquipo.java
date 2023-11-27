@@ -4,6 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import Tipos.*;
+import Pokemon.*;
 
 public class InterfazGenerarEquipo extends JFrame{
 
@@ -11,7 +17,11 @@ public class InterfazGenerarEquipo extends JFrame{
     private JButton botonSalir, botonCombatir;
     private JLabel[] imagenes;
 
-    public InterfazGenerarEquipo(JFrame interfazInicio){
+    private Socket s;
+
+    private Equipo_Pokemon equipo;
+
+    public InterfazGenerarEquipo(JFrame interfazInicio, Socket socket){
 
         setTitle("Generar equipo aleatorio");
         setSize(800, 300);
@@ -27,16 +37,34 @@ public class InterfazGenerarEquipo extends JFrame{
         textoCargando.setHorizontalAlignment(JLabel.CENTER);
         panelPrincipal.add(textoCargando, BorderLayout.CENTER);
 
+        //Generar equipo
+
+        Random r = new Random();
+        ArrayList<Pokemon> equipArray = new ArrayList<>();
+        List<Integer> num_usados = new ArrayList<>();
+
         imagenes = new JLabel[6];
         for (int i = 0; i < 6; i++) {
+            int numpoke = r.nextInt(1017);
+            while (num_usados.contains(numpoke)) {
+                numpoke = r.nextInt(1017);
+            }
+            System.out.println(numpoke);
+            Pokemon pok = Pokemon.generar_pokemon("https://pokeapi.co/api/v2/pokemon/" + numpoke);
+            equipArray.add(pok);
+            num_usados.add(numpoke);
+
             imagenes[i] = new JLabel();
             ImageIcon icono = new ImageIcon(getClass().getResource("132_front.png"));
             Image imagen = icono.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
             imagenes[i].setIcon(new ImageIcon(imagen));
             panelImagenes.add(imagenes[i]);
+            panelImagenes.add(new Label(pok.getName()));
         }
+        equipo = new Equipo_Pokemon(equipArray);
 
         textoCargando.setText("");
+
 
         JPanel panelBotones = new JPanel();
         panelBotones.setLayout(new FlowLayout());
@@ -54,7 +82,7 @@ public class InterfazGenerarEquipo extends JFrame{
         botonCombatir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                InterfazCombate combate = new InterfazCombate();
+                InterfazCombate combate = new InterfazCombate(equipo, s);
                 setVisible(false);
                 System.out.println("combatir");
             }

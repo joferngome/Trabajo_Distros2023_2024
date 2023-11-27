@@ -1,3 +1,5 @@
+package Pokemon;
+
 import Tipos.Tipo;
 
 import java.io.Serializable;

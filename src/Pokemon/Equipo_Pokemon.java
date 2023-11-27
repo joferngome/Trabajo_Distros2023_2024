@@ -1,3 +1,7 @@
+package Pokemon;
+
+import Pokemon.Pokemon;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -47,7 +51,7 @@ public class Equipo_Pokemon implements Serializable {
         return equipo_disponible;
     }
 
-    //Set Pokemon activo
+    //Set Pokemon.Pokemon activo
 
     public void setPokemonActivo(Pokemon pokemonActivo) {
         this.pokemonActivo = pokemonActivo;

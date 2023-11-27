@@ -3,6 +3,7 @@ package Interfaz_grafica;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.Socket;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,8 +19,11 @@ public class InterfazGraficaInicio extends JFrame implements ActionListener {
     private JPanel panel;
     private Image imagenFondo;
 
-    public InterfazGraficaInicio() {
+    private Socket s;
+
+    public InterfazGraficaInicio(Socket socket) {
         super("Combate pokemon");
+        s = socket;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
@@ -63,15 +67,16 @@ public class InterfazGraficaInicio extends JFrame implements ActionListener {
         if (e.getSource() == salir) {
             System.exit(0);
         } else if (e.getSource() == generarEquipo) {
-            InterfazGenerarEquipo ige = new InterfazGenerarEquipo(this);
+
+            InterfazGenerarEquipo ige = new InterfazGenerarEquipo(this, s);
             this.setVisible(false);
-            System.out.println("generar equipo");
+
         } else if (e.getSource() == elegirEquipo) {
             System.out.println("elegir equipo");
         }
     }
 
     public static void main(String[] args) {
-        new InterfazGraficaInicio();
+        new InterfazGraficaInicio(new Socket());
     }
 }
