@@ -22,72 +22,41 @@ public class CombateCliente {
             ObjectInputStream ois = new ObjectInputStream(s.getInputStream()))
         {
             //Lo he comentado para probar la interfaz grafica, si quieres probarlo por consola descomentalo y comenta esta línea. Descomenta el catch también
-            InterfazGraficaInicio in = new InterfazGraficaInicio(s);
-            /*Random r = new Random();
-            ArrayList<Pokemon> equipArray = new ArrayList<>();
-            List<Integer> num_usados = new ArrayList<>();
-            for(int i = 0; i < 6; i++ ) {
+            //InterfazGraficaInicio in = new InterfazGraficaInicio(s);
 
-                int numpoke = r.nextInt(1017);
-                while (num_usados.contains(numpoke)) {
+            //Genera equipo
+            Equipo_Pokemon eq1 = Equipo_Pokemon.generar_equipo();
+            System.out.println("genera equipo cliente " + eq1.getEquipo().size());
 
-                    numpoke = r.nextInt(1017);
-                }
-                System.out.println(numpoke);
-                Pokemon pok1 = Pokemon.generar_pokemon("https://pokeapi.co/api/v2/pokemon/" + numpoke);
-                equipArray.add(pok1);
-                num_usados.add(numpoke);
-            }
+            Pokemon pokemonActivo = eq1.elegir_pokemon();
+            eq1.setPokemonActivo(pokemonActivo);
 
-
-            System.out.println("genera equipo cliente " + equipArray.size());
-
-            Equipo_Pokemon eq1 = new Equipo_Pokemon(equipArray);
-
+            //Manda equipo
             oos.writeObject(eq1);
-            //Recibe mensaje elige un pokemon para luchar:
-            System.out.println((String) ois.readObject());
 
-            for(int i = 0; i < 6; i++){
-                //Mostrar los pokemon disponibles
-                System.out.print((String) ois.readObject());
+            //recibe equipo
+            Equipo_Pokemon eqEnemigo = (Equipo_Pokemon) ois.readObject();
+            System.out.println("El rival ha elegido: "+eqEnemigo.getPokemonActivo().getName());
+
+            int[] opciones = eq1.elegir_accion();
+
+            while(opciones[0] != 3){
+                //Manda al servidor la accion a realizar
+                oos.writeObject(opciones);
+
+                //Lee los dos equipos actualizados
+                eq1 = (Equipo_Pokemon) ois.readObject();
+                eqEnemigo = (Equipo_Pokemon) ois.readObject();
+
+                opciones = eq1.elegir_accion();
             }
-
-            //Elegir numero de Pokemon.Pokemon:
-
-            System.out.println("Introduce el numero del pokemon a elegir: ");
-            Scanner s1 = new Scanner(System.in);
-
-            oos.writeObject(s1.nextInt());
-
-            //Falta cuando me envian los pokemon y tengo que elegir un numero.
-
-            while(!salir){
-
-                if(((String)ois.readObject()).equals("Atacas")){
-
-                    //Recibir ataques por ois
-                    System.out.println("Ataques: ");
-                    
-                    for(int i=0;i<4;i++){
-                        System.out.println((String)ois.readObject());
-
-                    }
-                    System.out.println("Elige un ataque: ");
-                    Scanner s2 = new Scanner(System.in);
-                    oos.writeObject(s2.nextInt());
-                    System.out.println("He atacado");
-                }
-
-
-            }*/
 
 
         } catch (IOException e) {
             e.printStackTrace();
-        } /*catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     }

@@ -108,9 +108,15 @@ public class Pokemon implements Serializable {
 
             //Obtención de Sprites
             JSONObject sprites_json = pokemon_json.getJSONObject("sprites");
-
-            String back = sprites_json.getString("back_default");
-            String front = sprites_json.getString("front_default");
+            Object back_o = sprites_json.get("back_default") ;
+            Object front_o = sprites_json.get("front_default") ;
+            String back = "", front = "";
+            if(back_o != JSONObject.NULL){
+                back = (String) back_o;
+            }
+            if(front_o != JSONObject.NULL){
+                front = (String) front_o;
+            }
 
 
             JSONArray ataques_json = pokemon_json.getJSONArray("moves");
@@ -240,15 +246,9 @@ public class Pokemon implements Serializable {
 
     public int atacar(Pokemon pokemonEnemigo, Attack ataque){
 
-        //Elige un ataque del pokemon activo
         int damage = 0;
 
         if(ataque.getPower_points() > 0){
-
-            //Comprobamos si el ataque acierta
-            
-            //sout precision del ataque
-            System.out.println("La precision del ataque es: "+ataque.getPrecision());
 
             if(ataque.getPrecision() >= (int) (Math.random()*100)){
 
@@ -274,8 +274,6 @@ public class Pokemon implements Serializable {
                 pokemonEnemigo.setHealth(pokemonEnemigo.getHealth()-dano);
                 damage = dano;
             }
-
-            //Ataca al pokemon enemigo
             else{
                 System.out.println("El ataque falló");
                 ataque.setPower_points(ataque.getPower_points()-1);
@@ -283,6 +281,7 @@ public class Pokemon implements Serializable {
 
         }
         System.out.println("El ataque "+ataque.getName()+ " de "+this.getName()+" ha hecho "+damage+" de daño contra "+pokemonEnemigo.getName()+"\n");
+
         return damage;
     }
 

@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import Tipos.*;
@@ -22,7 +23,7 @@ public class InterfazGenerarEquipo extends JFrame{
     private Equipo_Pokemon equipo;
 
     public InterfazGenerarEquipo(JFrame interfazInicio, Socket socket){
-
+        this.s = socket;
         setTitle("Generar equipo aleatorio");
         setSize(800, 300);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -41,12 +42,15 @@ public class InterfazGenerarEquipo extends JFrame{
 
         Random r = new Random();
         ArrayList<Pokemon> equipArray = new ArrayList<>();
+        List<Integer> baneados = Arrays.asList(new Integer[]{10,11,13,14,129,132,201,202,235,265,266,268,292,360, 664,665,771,789,790,824,825});
         List<Integer> num_usados = new ArrayList<>();
+
+        // Numeros de pokemon prohibidos: 10,11,13,14,129,132,201,202,235,265,266,268,292,360,664,665,771,789,790,824,825
 
         imagenes = new JLabel[6];
         for (int i = 0; i < 6; i++) {
             int numpoke = r.nextInt(1017);
-            while (num_usados.contains(numpoke)) {
+            while (num_usados.contains(numpoke) && baneados.contains(numpoke)) {
                 numpoke = r.nextInt(1017);
             }
             System.out.println(numpoke);
