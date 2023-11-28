@@ -93,7 +93,7 @@ public class Equipo_Pokemon implements Serializable {
 
         Scanner s1 = new Scanner(System.in);
 
-        this.setPokemonActivo(this.getEquipo().get(s1.nextInt()-1));
+        this.setPokemonActivo(this.getEquipoDisponible().get(s1.nextInt()-1));
 
         System.out.println("Has elegido a " + this.getPokemonActivo().getName());
 
@@ -125,10 +125,7 @@ public class Equipo_Pokemon implements Serializable {
             System.out.println("2. " + pokemonActivo.getAttacks().get(2).getName());
             System.out.println("3. " + pokemonActivo.getAttacks().get(3).getName());
         }else if(opcion_turno == 2){
-            System.out.println("Elige el pokemon");
-            for (int i = 0; i < equipoDisponible.size(); i++) {
-                System.out.println(i + 1 + ". " + equipoDisponible.get(i).getName());
-            }
+            this.elegir_pokemon();
         }
         eleccion  = s1.nextInt();
 

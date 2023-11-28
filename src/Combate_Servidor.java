@@ -97,42 +97,42 @@ public class Combate_Servidor {
     private static ArrayList<Equipo_Pokemon> ejecutar_turno( Equipo_Pokemon equipo1, int [] opciones1, Equipo_Pokemon equipo2, int [] opciones2){
 
         if(opciones1[0] == 2 && opciones2[0] == 2 ){
+            System.out.println("Cambian los dos");
             //Cambian los dos de pokemon activo
-            equipo1.setPokemonActivo(equipo1.getEquipo().get(opciones1[1]));
-            equipo2.setPokemonActivo(equipo2.getEquipo().get(opciones2[1]));
+            equipo1.setPokemonActivo(equipo1.getEquipo().get(opciones1[1]-1));
+            equipo2.setPokemonActivo(equipo2.getEquipo().get(opciones2[1]-1));
         }
         else if(opciones1[0] == 1 && opciones2[0] == 2 ){
+            System.out.println("Cambian 2 ataca 1");
             //Cambia el 2 de pokemon activo, y luego el 1 ataca
-            equipo2.setPokemonActivo(equipo2.getEquipo().get(opciones2[1]));
+            equipo2.setPokemonActivo(equipo2.getEquipo().get(opciones2[1]-1));
             //Ataca equipo 1
             int dano_hecho = equipo1.getPokemonActivo().atacar(equipo2.getPokemonActivo(), equipo1.getPokemonActivo().getAttacks().get(opciones1[1]));
-            equipo2.getPokemonActivo().setHealth(equipo2.getPokemonActivo().getHealth() - dano_hecho);
         }else if (opciones1[0] == 2 && opciones2[0] == 1 ) {
+            System.out.println("Cambian 1 ataca 2");
             //Cambia el 1 de pokemon activo y luego el 2 ataca
-            equipo1.setPokemonActivo(equipo1.getEquipo().get(opciones1[1]));
+            equipo1.setPokemonActivo(equipo1.getEquipo().get(opciones1[1]-1));
             //Ataca equipo 2
             int dano_hecho = equipo2.getPokemonActivo().atacar(equipo1.getPokemonActivo(), equipo2.getPokemonActivo().getAttacks().get(opciones2[1]));
-            equipo1.getPokemonActivo().setHealth(equipo1.getPokemonActivo().getHealth() - dano_hecho);
         }
         else if(opciones1[0] == 1 && opciones2[0] == 1 ){
+            System.out.println("Cambian los 2");
             //Atacan los dos, pero primero el más rápido
             if(equipo1.getPokemonActivo().getSpeed() > equipo2.getPokemonActivo().getSpeed()) {
                 //Ataca equipo 1
                 int dano_hecho = equipo1.getPokemonActivo().atacar(equipo2.getPokemonActivo(), equipo1.getPokemonActivo().getAttacks().get(opciones1[1]));
-                equipo2.getPokemonActivo().setHealth(equipo2.getPokemonActivo().getHealth() - dano_hecho);
+
                 if(equipo2.getPokemonActivo().isAlive()){
                     //si no se ha muerto el pokemon activo del 2 ataca
                     dano_hecho = equipo2.getPokemonActivo().atacar(equipo1.getPokemonActivo(), equipo2.getPokemonActivo().getAttacks().get(opciones2[1]));
-                    equipo1.getPokemonActivo().setHealth(equipo1.getPokemonActivo().getHealth() - dano_hecho);
                 }
             }else{
                 //Ataca equipo 2
                 int dano_hecho = equipo2.getPokemonActivo().atacar(equipo1.getPokemonActivo(), equipo2.getPokemonActivo().getAttacks().get(opciones2[1]));
-                equipo1.getPokemonActivo().setHealth(equipo1.getPokemonActivo().getHealth() - dano_hecho);
+
                 if(equipo2.getPokemonActivo().isAlive()){
                     //si no se ha muerto el pokemon activo del 1 ataca
                     dano_hecho = equipo1.getPokemonActivo().atacar(equipo2.getPokemonActivo(), equipo1.getPokemonActivo().getAttacks().get(opciones1[1]));
-                    equipo2.getPokemonActivo().setHealth(equipo2.getPokemonActivo().getHealth() - dano_hecho);
 
                 }
             }
