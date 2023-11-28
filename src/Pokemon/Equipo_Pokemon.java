@@ -124,10 +124,10 @@ public class Equipo_Pokemon implements Serializable {
             System.out.println("1. " + pokemonActivo.getAttacks().get(1).getName());
             System.out.println("2. " + pokemonActivo.getAttacks().get(2).getName());
             System.out.println("3. " + pokemonActivo.getAttacks().get(3).getName());
+            eleccion  = s1.nextInt();
         }else if(opcion_turno == 2){
-            this.elegir_pokemon();
+            eleccion = this.equipo.indexOf(this.elegir_pokemon());
         }
-        eleccion  = s1.nextInt();
 
         int [] opciones = {opcion_turno,eleccion};
 

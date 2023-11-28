@@ -29,7 +29,7 @@ public class CombateCliente {
             System.out.println("genera equipo cliente " + eq1.getEquipo().size());
 
             Pokemon pokemonActivo = eq1.elegir_pokemon();
-            eq1.setPokemonActivo(pokemonActivo);
+            //eq1.setPokemonActivo(pokemonActivo);
 
             //Manda equipo
             oos.writeObject(eq1);
