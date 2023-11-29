@@ -31,21 +31,30 @@ public class Combate_Servidor {
                     System.out.println("genera equipo servidor " + eq1.getEquipo().size());
 
 
-                    // Pokemon Activo
-                    Pokemon pokemonActivo = eq1.elegir_pokemon();
+                    // Pokemon con el que abrir la batalla
+                    eq1.elegir_pokemon();
 
-                    //mandar equipo al rival
+                    //mandar equipo
                     oos.writeObject(eq1);
+
                     //Equipo rival
                     Equipo_Pokemon eqEnemigo = (Equipo_Pokemon) ois.readObject();
-                    System.out.println("El rival ha elegido a "+eqEnemigo.getPokemonActivo().getName());
+                    System.out.println("El rival ha elegido a "+eqEnemigo.getPokemonActivo());
 
                     int[] opciones = eq1.elegir_accion();
 
                     while (!eq1.AllDead() && !eqEnemigo.AllDead() && opciones[0] != 3) {
-                        //Obtiene eleccion del rival
-                        int[] opciones_rival = (int[]) ois.readObject();
+                        oos.reset();
 
+                        oos.writeObject(opciones);
+                        //Obtiene eleccion y equipo del rival
+                        int[] opciones_rival = (int[]) ois.readObject();
+                        eqEnemigo = (Equipo_Pokemon)  ois.readObject();
+
+                        if(opciones_rival[0] == 3){
+                            //Significa que el rival se ha rendido
+                            break;
+                        }
                         //Ejecuta el turno
                         ArrayList<Equipo_Pokemon> equipos_actualizados = ejecutar_turno(eq1,opciones,eqEnemigo,opciones_rival);
 
@@ -53,19 +62,39 @@ public class Combate_Servidor {
                         eq1 = equipos_actualizados.get(0);
                         eqEnemigo = equipos_actualizados.get(1);
 
+                        //Manda el equipo suyo al cliente
+                        oos.writeObject(eqEnemigo);
+
+                        //Comprueba si ha muerto nuestro pokemon activo
                         if(!eq1.getPokemonActivo().isAlive()){
                             System.out.println(eq1.getPokemonActivo().getName() + " ha muerto");
-                            pokemonActivo = eq1.elegir_pokemon();
-                            //eq1.setPokemonActivo(pokemonActivo);
+                            eq1.elegir_pokemon();
                         }
 
-                        //Manda los equipos al cliente, primero el suyo y luego el nuestro
-                        oos.writeObject(eqEnemigo);
+                        //Manda nuestro equipo al cliente
                         oos.writeObject(eq1);
+
+                        //Si se ha muerto el pokemon del rival, nos tiene que mandar de nuevo su equipo con el nuevo pokemon activo
+                        if(!eqEnemigo.getPokemonActivo().isAlive()){
+                            System.out.println("El "+ eqEnemigo.getPokemonActivo().getName() + " rival ha muerto");
+                            eqEnemigo = (Equipo_Pokemon)  ois.readObject();
+
+                        }
+                        System.out.println("El rival esta usando a " + eqEnemigo.getPokemonActivo());
 
                         //repetir turno
                         opciones = eq1.elegir_accion();
                     }
+                    if(opciones[0] == 3){
+                        System.out.println("Te has rendido");
+                        //Esperar a que el rival elija para que no explote.
+                        int[] opciones_rival = (int[]) ois.readObject();
+                    }else if(eq1.AllDead()){
+                        System.out.println("Has perdido");
+                    }else if(eqEnemigo.AllDead()){
+                        System.out.println("Has ganado");
+                    }
+
 
                 }catch (ClassNotFoundException e) {
                     e.printStackTrace();
@@ -78,21 +107,6 @@ public class Combate_Servidor {
         }
     }
 
-    private static Attack elegir_ataque(Pokemon pokemonActivo){
-        System.out.println("Ataca el jugador");
-
-        //Mostrar ataques entrenador 1
-
-        System.out.println("Elige un ataque: ");
-        for (int i = 0; i < pokemonActivo.getAttacks().size(); i++) {
-            System.out.println((i + 1) + " " + pokemonActivo.getAttacks().get(i).getName());
-        }
-
-        //Elige el ataque
-        Scanner s = new Scanner(System.in);
-
-        return pokemonActivo.getAttacks().get(s.nextInt() - 1);
-    }
     private static ArrayList<Equipo_Pokemon> ejecutar_turno( Equipo_Pokemon equipo1, int [] opciones1, Equipo_Pokemon equipo2, int [] opciones2){
 
         if(opciones1[0] == 2 && opciones2[0] == 2 ){

@@ -27,8 +27,8 @@ public class Pokemon implements Serializable {
     private String sprite_front;
     private String sprite_back;
 
-    int level;
-    int maxHealth;
+    private int level;
+    private int maxHealth;
     private ArrayList<Tipo> types;
     private static int count = 0;
     
@@ -225,6 +225,22 @@ public class Pokemon implements Serializable {
 		this.attacks = attacks;
 	}
 
+    public int getMaxHealth(){
+        return this.maxHealth;
+    }
+    public int getLevel(){
+        return this.level;
+    }
+
+    public int getHealthPercentage(){
+        if(this.isAlive()){
+            return Math.round(this.health * 100/this.maxHealth) ;
+        }else{
+            return 0;
+        }
+
+    }
+
 	public ArrayList<Attack> getAttacks(){
 		return this.attacks;
 
@@ -247,6 +263,7 @@ public class Pokemon implements Serializable {
     public int atacar(Pokemon pokemonEnemigo, Attack ataque){
 
         int damage = 0;
+        int porVida = pokemonEnemigo.getHealthPercentage();
 
         if(ataque.getPower_points() > 0){
 
@@ -280,7 +297,8 @@ public class Pokemon implements Serializable {
             }
 
         }
-        System.out.println("El ataque "+ataque.getName()+ " de "+this.getName()+" ha hecho "+damage+" de daño contra "+pokemonEnemigo.getName()+"\n");
+        int Porcevidaquitada =  porVida - pokemonEnemigo.getHealthPercentage();
+        System.out.println("El ataque "+ataque.getName()+ " de "+this.getName()+" ha hecho "+Porcevidaquitada+" % de daño contra "+pokemonEnemigo.getName()+"\n");
 
         return damage;
     }
@@ -292,5 +310,10 @@ public class Pokemon implements Serializable {
         }else{
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        return this.name +  " (" + this.getHealthPercentage() + "%)";
     }
 }

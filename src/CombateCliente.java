@@ -28,8 +28,8 @@ public class CombateCliente {
             Equipo_Pokemon eq1 = Equipo_Pokemon.generar_equipo();
             System.out.println("genera equipo cliente " + eq1.getEquipo().size());
 
-            Pokemon pokemonActivo = eq1.elegir_pokemon();
-            //eq1.setPokemonActivo(pokemonActivo);
+            // Pokemon con el que abrir la batalla
+            eq1.elegir_pokemon();
 
             //Manda equipo
             oos.writeObject(eq1);
@@ -40,13 +40,40 @@ public class CombateCliente {
 
             int[] opciones = eq1.elegir_accion();
 
-            while(opciones[0] != 3){
-                //Manda al servidor la accion a realizar
+
+
+            while(!eq1.AllDead() && !eqEnemigo.AllDead() && opciones[0] != 3){
+                //Manda al servidor la accion a realizar y su equipo
+                oos.reset();
+
                 oos.writeObject(opciones);
+                oos.writeObject(eq1);
+
+                //Lee eleccion rival(por si se ha rendido)
+                int[] opciones_rival = (int[]) ois.readObject();
+                if(opciones_rival[0] == 3){
+                    //Significa que el rival se ha rendido
+                    break;
+                }
 
                 //Lee los dos equipos actualizados
                 eq1 = (Equipo_Pokemon) ois.readObject();
                 eqEnemigo = (Equipo_Pokemon) ois.readObject();
+
+                //Si se ha muerto nuestro pokemon, elegimos otro y mandamos actualización al servidor
+                if(!eq1.getPokemonActivo().isAlive()){
+                    System.out.println(eq1.getPokemonActivo().getName() + " ha muerto");
+                    eq1.elegir_pokemon();
+
+                    oos.reset();
+                    oos.writeObject(eq1);
+                }
+
+                if(!eqEnemigo.getPokemonActivo().isAlive()){
+                    System.out.println("El "+ eqEnemigo.getPokemonActivo().getName() + " rival ha muerto");
+                }
+
+                System.out.println("El rival esta usando a " + eqEnemigo.getPokemonActivo());
 
                 opciones = eq1.elegir_accion();
             }
