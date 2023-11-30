@@ -84,6 +84,9 @@ public class Equipo_Pokemon implements Serializable {
         //Elegir el pokemon con el que abrir el combate
 
         ArrayList<Pokemon> equipoDisponible = this.getEquipoDisponible();
+        if(equipoDisponible.size() == 0){
+            return null;
+        }
         System.out.println("Elige un pokemon aliado para luchar: ");
 
         for (int i = 0; i < equipoDisponible.size(); i++) {

@@ -314,6 +314,11 @@ public class Pokemon implements Serializable {
 
     @Override
     public String toString() {
-        return this.name +  " (" + this.getHealthPercentage() + "%)";
+        String tipos = "[ ";
+        for(int i = 0; i<this.types.size(); i++){
+            tipos += this.types.get(i).name() + " ";
+        }
+        tipos += "]";
+        return this.name +  " (" + this.getHealthPercentage() + "%) " + tipos;
     }
 }
