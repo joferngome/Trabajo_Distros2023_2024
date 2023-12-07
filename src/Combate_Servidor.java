@@ -7,7 +7,6 @@ import java.net.Socket;
 import java.util.*;
 import java.util.List;
 
-import Interfaz_grafica.InterfazGraficaInicio;
 import Pokemon.*;
 
 import javax.swing.*;
@@ -57,6 +56,10 @@ public class Combate_Servidor {
 
                         //Ejecuta el turno
                         ArrayList<Equipo_Pokemon> equipos_actualizados = ejecutar_turno(eq1,opciones,eqEnemigo,opciones_rival);
+
+                        //aHabría que intentar mandar al cliente lo que ha pasado en el turno, lo
+                        //que se muestra en el metodo ejecutar turno
+
 
                         //Actualiza los equipos despues del turno
                         eq1 = equipos_actualizados.get(0);

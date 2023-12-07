@@ -24,6 +24,22 @@ public class Pokemon implements Serializable {
     private int defense;
     private int speed;
 
+    public String getSprite_front() {
+        return sprite_front;
+    }
+
+    public void setSprite_front(String sprite_front) {
+        this.sprite_front = sprite_front;
+    }
+
+    public String getSprite_back() {
+        return sprite_back;
+    }
+
+    public void setSprite_back(String sprite_back) {
+        this.sprite_back = sprite_back;
+    }
+
     private String sprite_front;
     private String sprite_back;
 

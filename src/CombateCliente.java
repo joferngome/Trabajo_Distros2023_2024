@@ -1,4 +1,3 @@
-import Interfaz_grafica.InterfazGraficaInicio;
 import Pokemon.Pokemon;
 
 import java.io.EOFException;
