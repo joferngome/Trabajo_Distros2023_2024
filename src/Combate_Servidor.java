@@ -22,10 +22,11 @@ public class Combate_Servidor {
                 try (Socket rival = ss.accept();
                         ObjectOutputStream oos = new ObjectOutputStream(rival.getOutputStream());
                         ObjectInputStream ois = new ObjectInputStream(rival.getInputStream());) {
-
+                    System.out.println("Combate iniciado");
+                    System.out.println("Generando equipo...");
                     //Generar equipo
                     Equipo_Pokemon eq1 = Equipo_Pokemon.generar_equipo();
-                    System.out.println("genera equipo servidor " + eq1.getEquipo().size());
+                    System.out.println("Equipo generado con " + eq1.getEquipo().size() + " pokemon \n");
 
 
                     // Pokemon con el que abrir la batalla
@@ -36,7 +37,7 @@ public class Combate_Servidor {
 
                     //Equipo rival
                     Equipo_Pokemon eqEnemigo = (Equipo_Pokemon) ois.readObject();
-                    System.out.println("El rival ha elegido a "+eqEnemigo.getPokemonActivo());
+                    System.out.println("El rival ha elegido a " + eqEnemigo.getPokemonActivo() + "\n");
 
                     int[] opciones = eq1.elegir_accion();
 
@@ -57,9 +58,8 @@ public class Combate_Servidor {
                         //Ejecuta el turno
                         ArrayList<Equipo_Pokemon> equipos_actualizados = ejecutar_turno(eq1,opciones,eqEnemigo,opciones_rival);
 
-                        //aHabría que intentar mandar al cliente lo que ha pasado en el turno, lo
-                        //que se muestra en el metodo ejecutar turno
-
+                        //manda mensaje de lo que ha ocurrido en el turno
+                        oos.writeObject(mensaje);
 
                         //Actualiza los equipos despues del turno
                         eq1 = equipos_actualizados.get(0);
@@ -90,7 +90,7 @@ public class Combate_Servidor {
                             eqEnemigo = (Equipo_Pokemon)  ois.readObject();
 
                         }
-                        System.out.println("El rival esta usando a " + eqEnemigo.getPokemonActivo());
+                        System.out.println("El rival esta usando a " + eqEnemigo.getPokemonActivo() + "\n");
 
                         //repetir turno
                         opciones = eq1.elegir_accion();
@@ -100,6 +100,7 @@ public class Combate_Servidor {
                         //Esperar a que el rival elija para que no explote.
                         oos.writeObject(opciones);
                         int[] opciones_rival = (int[]) ois.readObject();
+                        eqEnemigo = (Equipo_Pokemon) ois.readObject();
                     }else if(eq1.AllDead()){
                         System.out.println("Has perdido");
                     }else if(eqEnemigo.AllDead()){
@@ -111,79 +112,66 @@ public class Combate_Servidor {
                     System.out.println("Esperando un nuevo combate...");
                 }catch (ClassNotFoundException e) {
                     e.printStackTrace();
+                    System.out.println("Esperando un nuevo combate...");
+                }catch (IOException e) {
+                    //e.printStackTrace();
+                    System.out.println("El rival se ha desconectado");
+                    System.out.println("Has ganado");
+                    System.out.println("Esperando un nuevo combate...");
                 }
-
             }
-
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
     private static ArrayList<Equipo_Pokemon> ejecutar_turno( Equipo_Pokemon equipo1, int [] opciones1, Equipo_Pokemon equipo2, int [] opciones2){
 
         if(opciones1[0] == 2 && opciones2[0] == 2 ){
-            System.out.println("Cambian los dos");
             //Cambian los dos de pokemon activo
-            //equipo1.setPokemonActivo(equipo1.getEquipo().get(opciones1[1]-1));
-            //equipo2.setPokemonActivo(equipo2.getEquipo().get(opciones2[1]-1));
+            mensaje = "El rival ha cambiado a "+ equipo1.getPokemonActivo().toString() + "\n";
         }
         else if(opciones1[0] == 1 && opciones2[0] == 2 ){
-            System.out.println("Cambian 2 ataca 1");
             //Cambia el 2 de pokemon activo, y luego el 1 ataca
-            //equipo2.setPokemonActivo(equipo2.getEquipo().get(opciones2[1]-1));
+
             //Ataca equipo 1
-            int porVida = equipo2.getPokemonActivo().getHealthPercentage();
 
-            int dano_hecho = equipo1.getPokemonActivo().atacar(equipo2.getPokemonActivo(), equipo1.getPokemonActivo().getAttacks().get(opciones1[1]));
+            int Porcevidaquitada = equipo1.getPokemonActivo().atacar(equipo2.getPokemonActivo(), equipo1.getPokemonActivo().getAttacks().get(opciones1[1]));
 
-            int Porcevidaquitada =  porVida - equipo2.getPokemonActivo().getHealthPercentage();
             mensaje = "El ataque "+ equipo1.getPokemonActivo().getAttacks().get(opciones1[1]).getName()+ " de "+equipo1.getPokemonActivo().getName()+" ha hecho "+Porcevidaquitada+" % de daño contra "+equipo2.getPokemonActivo().getName()+"\n";
         }else if (opciones1[0] == 2 && opciones2[0] == 1 ) {
-            System.out.println("Cambian 1 ataca 2");
             //Cambia el 1 de pokemon activo y luego el 2 ataca
-            //equipo1.setPokemonActivo(equipo1.getEquipo().get(opciones1[1]-1));
             //Ataca equipo 2
+            mensaje = "El rival ha cambiado a "+ equipo1.getPokemonActivo().toString() + "\n";
 
-            int porVida = equipo1.getPokemonActivo().getHealthPercentage();
+            int Porcevidaquitada = equipo2.getPokemonActivo().atacar(equipo1.getPokemonActivo(), equipo2.getPokemonActivo().getAttacks().get(opciones2[1]));
 
-            int dano_hecho = equipo2.getPokemonActivo().atacar(equipo1.getPokemonActivo(), equipo2.getPokemonActivo().getAttacks().get(opciones2[1]));
-
-            int Porcevidaquitada =  porVida - equipo1.getPokemonActivo().getHealthPercentage();
-            mensaje = "El ataque "+ equipo2.getPokemonActivo().getAttacks().get(opciones2[1]).getName()+ " de "+equipo2.getPokemonActivo().getName()+" ha hecho "+Porcevidaquitada+" % de daño contra "+equipo1.getPokemonActivo().getName()+"\n";
+            mensaje += "El ataque "+ equipo2.getPokemonActivo().getAttacks().get(opciones2[1]).getName()+ " de "+equipo2.getPokemonActivo().getName()+" ha hecho "+Porcevidaquitada+" % de daño contra "+equipo1.getPokemonActivo().getName()+"\n";
         }
         else if(opciones1[0] == 1 && opciones2[0] == 1 ){
-            System.out.println("Atacan los 2");
             //Atacan los dos, pero primero el más rápido
             if(equipo1.getPokemonActivo().getSpeed() > equipo2.getPokemonActivo().getSpeed()) {
                 //Ataca equipo 1
-                int porVida = equipo2.getPokemonActivo().getHealthPercentage();
 
-                int dano_hecho = equipo1.getPokemonActivo().atacar(equipo2.getPokemonActivo(), equipo1.getPokemonActivo().getAttacks().get(opciones1[1]));
+                int Porcevidaquitada = equipo1.getPokemonActivo().atacar(equipo2.getPokemonActivo(), equipo1.getPokemonActivo().getAttacks().get(opciones1[1]));
 
-                int Porcevidaquitada =  porVida - equipo2.getPokemonActivo().getHealthPercentage();
                 mensaje = "El ataque "+ equipo1.getPokemonActivo().getAttacks().get(opciones1[1]).getName()+ " de "+equipo1.getPokemonActivo().getName()+" ha hecho "+Porcevidaquitada+" % de daño contra "+equipo2.getPokemonActivo().getName()+"\n";
                 if(equipo2.getPokemonActivo().isAlive()){
-                    porVida = equipo1.getPokemonActivo().getHealthPercentage();
                     //si no se ha muerto el pokemon activo del 2 ataca
-                    dano_hecho = equipo2.getPokemonActivo().atacar(equipo1.getPokemonActivo(), equipo2.getPokemonActivo().getAttacks().get(opciones2[1]));
-                    Porcevidaquitada =  porVida - equipo1.getPokemonActivo().getHealthPercentage();
+                    Porcevidaquitada = equipo2.getPokemonActivo().atacar(equipo1.getPokemonActivo(), equipo2.getPokemonActivo().getAttacks().get(opciones2[1]));
+
                     mensaje += "El ataque "+ equipo2.getPokemonActivo().getAttacks().get(opciones2[1]).getName()+ " de "+equipo2.getPokemonActivo().getName()+" ha hecho "+Porcevidaquitada+" % de daño contra "+equipo1.getPokemonActivo().getName()+"\n";
 
                 }
             }else{
                 //Ataca equipo 2
-                int porVida = equipo1.getPokemonActivo().getHealthPercentage();
-                int dano_hecho = equipo2.getPokemonActivo().atacar(equipo1.getPokemonActivo(), equipo2.getPokemonActivo().getAttacks().get(opciones2[1]));
-                int Porcevidaquitada =  porVida - equipo2.getPokemonActivo().getHealthPercentage();
-                mensaje = "El ataque "+ equipo1.getPokemonActivo().getAttacks().get(opciones1[1]).getName()+ " de "+equipo1.getPokemonActivo().getName()+" ha hecho "+Porcevidaquitada+" % de daño contra "+equipo2.getPokemonActivo().getName()+"\n";
+                int Porcevidaquitada = equipo2.getPokemonActivo().atacar(equipo1.getPokemonActivo(), equipo2.getPokemonActivo().getAttacks().get(opciones2[1]));
+                mensaje = "El ataque "+ equipo2.getPokemonActivo().getAttacks().get(opciones2[1]).getName()+ " de "+equipo2.getPokemonActivo().getName()+" ha hecho "+Porcevidaquitada+" % de daño contra "+equipo1.getPokemonActivo().getName()+"\n";
 
                 if(equipo1.getPokemonActivo().isAlive()){
                     //si no se ha muerto el pokemon activo del 1 ataca
-                    porVida = equipo2.getPokemonActivo().getHealthPercentage();
-                    dano_hecho = equipo1.getPokemonActivo().atacar(equipo2.getPokemonActivo(), equipo1.getPokemonActivo().getAttacks().get(opciones1[1]));
-                    Porcevidaquitada =  porVida - equipo1.getPokemonActivo().getHealthPercentage();
-                    mensaje += "El ataque "+ equipo2.getPokemonActivo().getAttacks().get(opciones2[1]).getName()+ " de "+equipo2.getPokemonActivo().getName()+" ha hecho "+Porcevidaquitada+" % de daño contra "+equipo1.getPokemonActivo().getName()+"\n";
+                    Porcevidaquitada = equipo1.getPokemonActivo().atacar(equipo2.getPokemonActivo(), equipo1.getPokemonActivo().getAttacks().get(opciones1[1]));
+                    mensaje += "El ataque "+ equipo1.getPokemonActivo().getAttacks().get(opciones1[1]).getName()+ " de "+equipo1.getPokemonActivo().getName()+" ha hecho "+Porcevidaquitada+" % de daño contra "+equipo2.getPokemonActivo().getName()+"\n";
                 }
             }
         }

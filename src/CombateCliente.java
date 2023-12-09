@@ -21,10 +21,11 @@ public class CombateCliente {
             ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
             ObjectInputStream ois = new ObjectInputStream(s.getInputStream()))
         {
-
+            System.out.println("Combate iniciado");
+            System.out.println("Generando equipo...");
             //Genera equipo
             Equipo_Pokemon eq1 = Equipo_Pokemon.generar_equipo();
-            System.out.println("genera equipo cliente " + eq1.getEquipo().size());
+            System.out.println("Equipo generado con " + eq1.getEquipo().size() + " pokemon \n");
 
             // Pokemon con el que abrir la batalla
             eq1.elegir_pokemon();
@@ -34,7 +35,7 @@ public class CombateCliente {
 
             //recibe equipo
             Equipo_Pokemon eqEnemigo = (Equipo_Pokemon) ois.readObject();
-            System.out.println("El rival ha elegido: "+eqEnemigo.getPokemonActivo().getName());
+            System.out.println("El rival ha elegido: "+eqEnemigo.getPokemonActivo().getName() + "\n");
 
             int[] opciones = eq1.elegir_accion();
 
@@ -54,6 +55,11 @@ public class CombateCliente {
                     //Significa que el rival se ha rendido
                     break;
                 }
+
+                //Lee el mensaje con lo que ha pasasdo en el turno
+
+                String mensaje = (String) ois.readObject();
+                System.out.println(mensaje);
 
                 //Lee los dos equipos actualizados
                 eq1 = (Equipo_Pokemon) ois.readObject();
@@ -79,7 +85,7 @@ public class CombateCliente {
                     }
                 }
 
-                System.out.println("El rival esta usando a " + eqEnemigo.getPokemonActivo());
+                System.out.println("El rival esta usando a " + eqEnemigo.getPokemonActivo() + "\n");
 
                 opciones = eq1.elegir_accion();
                 oos.reset();

@@ -54,5 +54,9 @@ public class Attack implements Serializable {
 	public Tipo getType() {
 		return this.type;
 	}
-	 
+
+	@Override
+	public String toString() {
+		return this.name +  " pw: " + this.power + " pp: " + this.power_points +  " ("+ this.type.name() +")";
+	}
 }

@@ -81,27 +81,25 @@ public class Pokemon implements Serializable {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
+            //Leemos una línea porque el resultado del json está en una sola línea
             String linea = br.readLine();
 
             br.close();
             connection.disconnect();
 
+            //Obtención del objeto JSON a partir de la linea leida.
             JSONObject pokemon_json = new JSONObject(linea);
+            String nombre_poke = pokemon_json.getString("name");
 
+            //Obtención de Tipos
             JSONArray tipos_json = pokemon_json.getJSONArray("types");
             ArrayList<Tipo> tipos = new ArrayList<Tipo>();
-
-            String nombre_poke = pokemon_json.getString("name");
-            System.out.println(nombre_poke);
             for(int i = 0; i < tipos_json.length(); i++) {
                 JSONObject tipo = tipos_json.getJSONObject(i).getJSONObject("type");
                 tipos.add(Tipo.valueOf(tipo.getString("name")));
             }
 
-            System.out.println(tipos.toString());
-
             //Obtención de Stats
-
             JSONArray stats_json = pokemon_json.getJSONArray("stats");
             int health = stats_json.getJSONObject(0).getInt("base_stat");
             int attack = stats_json.getJSONObject(1).getInt("base_stat");
@@ -115,14 +113,13 @@ public class Pokemon implements Serializable {
             attack = Math.max(attack, spe_attack);
             defense = Math.max(defense, spe_defense);
 
-            //Recálculo de stats para adecuarlas al nivel 100.
-
+            //Recálculo de stats para adecuarlas al nivel 100
             health = 10 + (health * 2) + level;
             attack = 5 + (attack * 2);
             defense = 5 + (defense * 2);
             speed = 5 + (speed * 2);
 
-            //Obtención de Sprites
+            //Obtención de Sprites, por si hacemos interfaz gráfica
             JSONObject sprites_json = pokemon_json.getJSONObject("sprites");
             Object back_o = sprites_json.get("back_default") ;
             Object front_o = sprites_json.get("front_default") ;
@@ -134,7 +131,7 @@ public class Pokemon implements Serializable {
                 front = (String) front_o;
             }
 
-
+            //Obtención de movimientos
             JSONArray ataques_json = pokemon_json.getJSONArray("moves");
             Random r = new Random();
             List<Integer> num_usados = new ArrayList<>();
@@ -152,6 +149,7 @@ public class Pokemon implements Serializable {
 
                 num_usados.add(numattack);
 
+                //Obtener los datos de cada movimiento, desde el JSON, igual que antes
                 URL url_move = new URL(ataque.getString("url"));
                 HttpURLConnection connection_move = (HttpURLConnection) url_move.openConnection();
                 connection_move.setRequestMethod("GET");
@@ -166,7 +164,6 @@ public class Pokemon implements Serializable {
 
                 String clase_move = move_class_json.getString("name");
 
-
                 Object poder = move_json.get("power") ;
                 Object precision = move_json.get("accuracy") ;
 
@@ -175,6 +172,8 @@ public class Pokemon implements Serializable {
                             move_json.getInt("power"),move_json.getInt("accuracy"),
                             move_json.getInt("pp"),Tipo.valueOf(move_json.getJSONObject("type").getString("name"))));
                     j++;
+                    //Solo aumentamos el nª de ataques si el ataque no es de estado, hace daño fijo, y tiene precision fija.
+                    //Si no se genera otro ataque distinto
                 }
 
                 br_move.close();
@@ -316,7 +315,7 @@ public class Pokemon implements Serializable {
         int Porcevidaquitada =  porVida - pokemonEnemigo.getHealthPercentage();
         System.out.println("El ataque "+ataque.getName()+ " de "+this.getName()+" ha hecho "+Porcevidaquitada+" % de daño contra "+pokemonEnemigo.getName()+"\n");
 
-        return damage;
+        return Porcevidaquitada;
     }
 
     @Override
@@ -330,9 +329,13 @@ public class Pokemon implements Serializable {
 
     @Override
     public String toString() {
-        String tipos = "[ ";
-        for(int i = 0; i<this.types.size(); i++){
-            tipos += this.types.get(i).name() + " ";
+        String tipos = "[";
+        for(int i = 0; i < this.types.size(); i++){
+            if(i == this.types.size() - 1){
+                tipos += this.types.get(i).name();
+            }else{
+                tipos += this.types.get(i).name() + " | ";
+            }
         }
         tipos += "]";
         return this.name +  " (" + this.getHealthPercentage() + "%) " + tipos;

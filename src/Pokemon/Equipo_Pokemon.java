@@ -72,7 +72,6 @@ public class Equipo_Pokemon implements Serializable {
             while (num_usados.contains(numpoke) || baneados.contains(numpoke)) {
                 numpoke = r.nextInt(1,1017);
             }
-            System.out.println(numpoke);
             Pokemon pok1 = Pokemon.generar_pokemon("https://pokeapi.co/api/v2/pokemon/" + numpoke);
             equipArray.add(pok1);
             num_usados.add(numpoke);
@@ -109,7 +108,12 @@ public class Equipo_Pokemon implements Serializable {
         System.out.println("Pokemon activo: " + this.getPokemonActivo());
         System.out.println("Pokemon disponibles");
         for (int i = 0; i < equipoDisponible.size(); i++) {
-            System.out.print(equipoDisponible.get(i) +  " ");
+            if(i == equipoDisponible.size() - 1){
+                System.out.print(equipoDisponible.get(i));
+            }
+            else{
+                System.out.print(equipoDisponible.get(i) +  " | ");
+            }
         }
         System.out.println("\n ¿Qué quieres hacer?");
         System.out.println("1.Atacar");
@@ -123,10 +127,18 @@ public class Equipo_Pokemon implements Serializable {
 
         opcion_turno  = s1.nextInt();
 
+        while(opcion_turno < 1 || opcion_turno > 3){
+            System.out.println("Elige una opcion válida");
+            System.out.println("1.Atacar");
+            System.out.println("2.Cambiar");
+            System.out.println("3.Rendirse");
+            opcion_turno  = s1.nextInt();
+        }
+
         if(opcion_turno == 1){
             System.out.println("Elige el movimiento");
             for (int i = 0; i < pokemonActivo.getAttacks().size(); i++) {
-                System.out.println((i + 1) + " " + pokemonActivo.getAttacks().get(i).getName());
+                System.out.println((i + 1) + " " + pokemonActivo.getAttacks().get(i).toString());
             }
             eleccion  = s1.nextInt() - 1;
         }else if(opcion_turno == 2){
