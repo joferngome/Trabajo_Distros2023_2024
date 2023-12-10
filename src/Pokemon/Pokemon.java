@@ -31,6 +31,9 @@ public class Pokemon implements Serializable {
     private ArrayList<Tipo> types;
     private ArrayList<Attack> attacks = new ArrayList<Attack>();
 
+    //PRE: Recibe el nombre del pokemon no nulo , su vida >0 , su ataque >0, su defensa >0, su velocidad>0, sus tipos no nulos, sus ataques no nulos y su nivel >=1.
+    //POST: Crea un pokemon con los datos recibidos.
+
     public Pokemon(String name, int health, int attack , int defense, int speed, ArrayList<Tipo> types, ArrayList<Attack> attacks, int level, String sprite_front, String sprite_back){
         this.name = name;
 
@@ -48,6 +51,9 @@ public class Pokemon implements Serializable {
         this.sprite_front = sprite_front;
         this.sprite_back = sprite_back;
     }
+
+    //PRE: Recibe un string con la url valida de un pokemon
+    //POST: Devuelve un pokemon con los datos obtenidos de la url
 
     public static Pokemon generar_pokemon(String url){
         try{
@@ -230,6 +236,9 @@ public class Pokemon implements Serializable {
         this.sprite_back = sprite_back;
     }
 
+    //PRE
+    //POST: Devuelve el porcentaje de vida del pokemon
+
     public int getHealthPercentage(){
         if(this.isAlive()){
             return Math.round(this.health * 100/this.maxHealth) ;
@@ -245,6 +254,8 @@ public class Pokemon implements Serializable {
 	}
 
     //Esta vivo
+    //PRE
+    //POST: Devuelve true si el pokemon esta vivo
 
     public boolean isAlive(){
 
@@ -255,6 +266,9 @@ public class Pokemon implements Serializable {
         return false;
 
     }
+
+    //PRE: Recibe un pokemon no nulo y un ataque no nulo
+    //POST: Ataca al pokemon recibido con el ataque recibido y devuelve el daño hecho
 
 
     //Atacar
@@ -300,6 +314,9 @@ public class Pokemon implements Serializable {
         return Porcevidaquitada;
     }
 
+    //PRE: Recibe un pokemon no nulo
+    //POST: Devuelve true si el pokemon recibido es igual a este pokemon
+
     @Override
     public boolean equals(Object pokemon) {
         if(this.name.equals(((Pokemon) pokemon).name)){
@@ -308,6 +325,9 @@ public class Pokemon implements Serializable {
             return false;
         }
     }
+
+    //PRE
+    //POST: Devuelve un string con los datos del pokemon
 
     @Override
     public String toString() {

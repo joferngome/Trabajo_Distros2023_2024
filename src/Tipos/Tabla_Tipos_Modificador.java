@@ -30,12 +30,16 @@ public class Tabla_Tipos_Modificador{
 
     }
 
+    //PRE: Recibe el tipo del atacante y el tipo del oponente. Y ambos son enteros mayores que 0 y menores que 19.
+    //POST: Devuelve el modificador del tipo de ataque y el tipo del oponente.
+
     public double getModificador(int tipoAtacante, int tipoOponente) {
 
         return tablaTipos[tipoAtacante][tipoOponente];
     }
 
-    //  Si un pokemon tiene dos tipos que devuelva el modificador más alto de los dos tipos.
+    // PRE: Recibe el tipo del atacante y los tipos del oponente. Y todos son enteros mayores que 0 y menores que 19.
+    // POST: Devuelve el modificador mayor
 
     public double getModificador(int tipoAtacante, int tipoOponente1, int tipoOponente2) {
 

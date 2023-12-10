@@ -10,9 +10,15 @@ public class Equipo_Pokemon implements Serializable {
     private ArrayList<Pokemon> equipo = new ArrayList<>();
     private Pokemon pokemonActivo;
 
+    //PRE: Recibe un arraylist de pokemons no nulo
+    //POST: Crea un equipo de pokemon con los pokemons recibidos
+
     public Equipo_Pokemon(ArrayList<Pokemon> equipo) {
         this.equipo = equipo;
     }
+
+    //PRE:
+    //POST: Devuelve true si todos los pokemons del equipo estan muertos
 
     public boolean AllDead(){
         for (Pokemon pokemon : equipo) {
@@ -26,6 +32,9 @@ public class Equipo_Pokemon implements Serializable {
     public ArrayList<Pokemon> getEquipo() {
         return equipo;
     }
+
+    //PRE: 
+    //POST: Devuelve un arraylist con los pokemons del equipo que estan vivos y no son el pokemon activo
 
     public ArrayList<Pokemon> getEquipoDisponible() {
         ArrayList<Pokemon> equipo_disponible = new ArrayList<>();
@@ -53,6 +62,9 @@ public class Equipo_Pokemon implements Serializable {
         return pokemonActivo;
     }
 
+    //PRE
+    //POST: Devuelve un equipo de pokemon aleatorio
+
     public static Equipo_Pokemon generar_equipo(){
         Random r = new Random();
         ArrayList<Pokemon> equipArray = new ArrayList<>();
@@ -72,6 +84,9 @@ public class Equipo_Pokemon implements Serializable {
         }
         return new Equipo_Pokemon(equipArray);
     }
+
+    //PRE:
+    //POST: Elige el pokemon del equipo con el que se va a abrir el combate
 
     public Pokemon elegir_pokemon(){
         //Elegir el pokemon con el que abrir el combate
@@ -94,6 +109,9 @@ public class Equipo_Pokemon implements Serializable {
 
         return this.getPokemonActivo();
     }
+
+    //PRE:
+    //POST: Elige la accion que se va a realizar en el turno
 
     public int[] elegir_accion(){
         //Elegir la accion en los turnos

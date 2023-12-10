@@ -12,6 +12,9 @@ public class Attack implements Serializable {
 
 	private Tipo type;
 
+	//PRE: Recibe el nombre del ataque distinto de nulo, su potencia >0 , su precisión >0, sus puntos de poder >0 y su tipo no nulo.
+	//POST: Crea un ataque con los datos recibidos.
+
 	public Attack(String name, int power, int precision, int power_points, Tipo type){
 		this.name = name;
 		this.power = power;
