@@ -23,35 +23,13 @@ public class Pokemon implements Serializable {
     private int attack;
     private int defense;
     private int speed;
-
-    public String getSprite_front() {
-        return sprite_front;
-    }
-
-    public void setSprite_front(String sprite_front) {
-        this.sprite_front = sprite_front;
-    }
-
-    public String getSprite_back() {
-        return sprite_back;
-    }
-
-    public void setSprite_back(String sprite_back) {
-        this.sprite_back = sprite_back;
-    }
-
     private String sprite_front;
     private String sprite_back;
 
     private int level;
     private int maxHealth;
     private ArrayList<Tipo> types;
-    private static int count = 0;
-    
     private ArrayList<Attack> attacks = new ArrayList<Attack>();
-
-
-
 
     public Pokemon(String name, int health, int attack , int defense, int speed, ArrayList<Tipo> types, ArrayList<Attack> attacks, int level, String sprite_front, String sprite_back){
         this.name = name;
@@ -69,8 +47,6 @@ public class Pokemon implements Serializable {
 
         this.sprite_front = sprite_front;
         this.sprite_back = sprite_back;
-
-        count++;
     }
 
     public static Pokemon generar_pokemon(String url){
@@ -196,10 +172,6 @@ public class Pokemon implements Serializable {
         return null;
     }
 
-    public void attackPokemon(Pokemon pokemon){
-        pokemon.health -= 10;
-    }
-
     public String getName(){
         return this.name;
     }
@@ -210,10 +182,6 @@ public class Pokemon implements Serializable {
 
     public ArrayList<Tipo> getTypes(){
         return this.types;
-    }
-
-    public static int getCount(){
-        return count;
     }
 
     public void setHealth(int health){
@@ -246,6 +214,21 @@ public class Pokemon implements Serializable {
     public int getLevel(){
         return this.level;
     }
+    public String getSprite_front() {
+        return sprite_front;
+    }
+
+    public void setSprite_front(String sprite_front) {
+        this.sprite_front = sprite_front;
+    }
+
+    public String getSprite_back() {
+        return sprite_back;
+    }
+
+    public void setSprite_back(String sprite_back) {
+        this.sprite_back = sprite_back;
+    }
 
     public int getHealthPercentage(){
         if(this.isAlive()){
@@ -273,29 +256,28 @@ public class Pokemon implements Serializable {
 
     }
 
-    //Atacar
 
+    //Atacar
     public int atacar(Pokemon pokemonEnemigo, Attack ataque){
 
         int damage = 0;
         int porVida = pokemonEnemigo.getHealthPercentage();
 
+        //Comprueba si quedan puntos de poder para usar el ataque
         if(ataque.getPower_points() > 0){
 
+            //Genera un numero aleatorio para decidir si el ataque falla o no
             if(ataque.getPrecision() >= (int) (Math.random()*100)){
 
                 Tabla_Tipos_Modificador tabla = new Tabla_Tipos_Modificador();
 
                 //Comprobamos efectividad del ataque con tabla tipos
 
-                //Comprueba cuantos tipos tiene el pokemon
-
                 double modificadorTipo = 1;
 
                 for(int i = 0; i < pokemonEnemigo.getTypes().size();i++){
                     modificadorTipo *= tabla.getModificador(ataque.getType().getNumVal()-1, pokemonEnemigo.getTypes().get(i).getNumVal()-1);
                 }
-
 
                 //Calcula el daño con el modificador de tipo
 

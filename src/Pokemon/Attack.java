@@ -12,19 +12,13 @@ public class Attack implements Serializable {
 
 	private Tipo type;
 
-	 public Attack(String name, int power, int precision, int power_points, Tipo type){
-		 this.name = name;
-		 this.power = power;
-		 this.precision = precision;
-		 this.power_points = power_points;
-		 this.type = type;
-
-
-
-	 }
-
-	 
-
+	public Attack(String name, int power, int precision, int power_points, Tipo type){
+		this.name = name;
+		this.power = power;
+		this.precision = precision;
+		this.power_points = power_points;
+		this.type = type;
+	}
 	 
 	public String getName() {
 		return name;
@@ -57,6 +51,6 @@ public class Attack implements Serializable {
 
 	@Override
 	public String toString() {
-		return this.name +  " pw: " + this.power + " pp: " + this.power_points +  " ("+ this.type.name() +")";
+		return this.name +  " pw: " + this.power + " pp: " + this.power_points + " prec: " + this.precision + " ("+ this.type.name() +")";
 	}
 }

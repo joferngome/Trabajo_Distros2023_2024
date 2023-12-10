@@ -44,21 +44,25 @@ public class Combate_Servidor {
                     while (!eq1.AllDead() && !eqEnemigo.AllDead() && opciones[0] != 3) {
                         oos.reset();
 
+                        //Manda las opciones al rival
                         oos.writeObject(opciones);
+
                         //Obtiene eleccion y equipo del rival
                         int[] opciones_rival = (int[]) ois.readObject();
 
                         if(opciones_rival[0] == 3){
+                            //Comprobar si el rival se ha rendido
                             System.out.println("El rival se ha rendido");
                             break;
                         }
 
+                        //Recibir el equipo rival
                         eqEnemigo = (Equipo_Pokemon)  ois.readObject();
 
                         //Ejecuta el turno
                         ArrayList<Equipo_Pokemon> equipos_actualizados = ejecutar_turno(eq1,opciones,eqEnemigo,opciones_rival);
 
-                        //manda mensaje de lo que ha ocurrido en el turno
+                        //Manda mensaje de lo que ha ocurrido en el turno
                         oos.writeObject(mensaje);
 
                         //Actualiza los equipos despues del turno
@@ -97,6 +101,7 @@ public class Combate_Servidor {
                     }
                     if(opciones[0] == 3){
                         System.out.println("Te has rendido");
+
                         //Esperar a que el rival elija para que no explote.
                         oos.writeObject(opciones);
                         int[] opciones_rival = (int[]) ois.readObject();
@@ -133,33 +138,27 @@ public class Combate_Servidor {
         }
         else if(opciones1[0] == 1 && opciones2[0] == 2 ){
             //Cambia el 2 de pokemon activo, y luego el 1 ataca
-
             //Ataca equipo 1
-
             int Porcevidaquitada = equipo1.getPokemonActivo().atacar(equipo2.getPokemonActivo(), equipo1.getPokemonActivo().getAttacks().get(opciones1[1]));
-
             mensaje = "El ataque "+ equipo1.getPokemonActivo().getAttacks().get(opciones1[1]).getName()+ " de "+equipo1.getPokemonActivo().getName()+" ha hecho "+Porcevidaquitada+" % de daño contra "+equipo2.getPokemonActivo().getName()+"\n";
+
         }else if (opciones1[0] == 2 && opciones2[0] == 1 ) {
             //Cambia el 1 de pokemon activo y luego el 2 ataca
             //Ataca equipo 2
             mensaje = "El rival ha cambiado a "+ equipo1.getPokemonActivo().toString() + "\n";
-
             int Porcevidaquitada = equipo2.getPokemonActivo().atacar(equipo1.getPokemonActivo(), equipo2.getPokemonActivo().getAttacks().get(opciones2[1]));
-
             mensaje += "El ataque "+ equipo2.getPokemonActivo().getAttacks().get(opciones2[1]).getName()+ " de "+equipo2.getPokemonActivo().getName()+" ha hecho "+Porcevidaquitada+" % de daño contra "+equipo1.getPokemonActivo().getName()+"\n";
         }
         else if(opciones1[0] == 1 && opciones2[0] == 1 ){
             //Atacan los dos, pero primero el más rápido
             if(equipo1.getPokemonActivo().getSpeed() > equipo2.getPokemonActivo().getSpeed()) {
                 //Ataca equipo 1
-
                 int Porcevidaquitada = equipo1.getPokemonActivo().atacar(equipo2.getPokemonActivo(), equipo1.getPokemonActivo().getAttacks().get(opciones1[1]));
-
                 mensaje = "El ataque "+ equipo1.getPokemonActivo().getAttacks().get(opciones1[1]).getName()+ " de "+equipo1.getPokemonActivo().getName()+" ha hecho "+Porcevidaquitada+" % de daño contra "+equipo2.getPokemonActivo().getName()+"\n";
+
                 if(equipo2.getPokemonActivo().isAlive()){
                     //si no se ha muerto el pokemon activo del 2 ataca
                     Porcevidaquitada = equipo2.getPokemonActivo().atacar(equipo1.getPokemonActivo(), equipo2.getPokemonActivo().getAttacks().get(opciones2[1]));
-
                     mensaje += "El ataque "+ equipo2.getPokemonActivo().getAttacks().get(opciones2[1]).getName()+ " de "+equipo2.getPokemonActivo().getName()+" ha hecho "+Porcevidaquitada+" % de daño contra "+equipo1.getPokemonActivo().getName()+"\n";
 
                 }

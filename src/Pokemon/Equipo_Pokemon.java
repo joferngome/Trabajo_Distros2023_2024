@@ -9,21 +9,15 @@ public class Equipo_Pokemon implements Serializable {
 
     private ArrayList<Pokemon> equipo = new ArrayList<>();
     private Pokemon pokemonActivo;
-    private final int numPokemon = 1;
 
     public Equipo_Pokemon(ArrayList<Pokemon> equipo) {
         this.equipo = equipo;
-
-
     }
 
     public boolean AllDead(){
-
         for (Pokemon pokemon : equipo) {
-
-            if(pokemon.getHealth()>0){
+            if(pokemon.getHealth() > 0){
                 return false;
-
             }
         }
         return true;
@@ -51,8 +45,6 @@ public class Equipo_Pokemon implements Serializable {
         return equipo_disponible;
     }
 
-    //Set Pokemon.Pokemon activo
-
     public void setPokemonActivo(Pokemon pokemonActivo) {
         this.pokemonActivo = pokemonActivo;
     }
@@ -72,9 +64,11 @@ public class Equipo_Pokemon implements Serializable {
             while (num_usados.contains(numpoke) || baneados.contains(numpoke)) {
                 numpoke = r.nextInt(1,1017);
             }
+
             Pokemon pok1 = Pokemon.generar_pokemon("https://pokeapi.co/api/v2/pokemon/" + numpoke);
             equipArray.add(pok1);
             num_usados.add(numpoke);
+            System.out.println(i+1 + ". " +pok1.getName());
         }
         return new Equipo_Pokemon(equipArray);
     }
@@ -102,7 +96,7 @@ public class Equipo_Pokemon implements Serializable {
     }
 
     public int[] elegir_accion(){
-        //Elegir el pokemon con el que abrir el combate
+        //Elegir la accion en los turnos
 
         ArrayList<Pokemon> equipoDisponible = this.getEquipoDisponible();
         System.out.println("Pokemon activo: " + this.getPokemonActivo());
@@ -149,7 +143,4 @@ public class Equipo_Pokemon implements Serializable {
 
         return opciones;
     }
-
-
-    
 }

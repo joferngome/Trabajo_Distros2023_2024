@@ -42,9 +42,8 @@ public class CombateCliente {
             oos.reset();
 
             while(!eq1.AllDead() && !eqEnemigo.AllDead() && opciones[0] != 3){
+
                 //Manda al servidor la accion a realizar y su equipo
-
-
                 oos.writeObject(opciones);
                 oos.writeObject(eq1);
 
@@ -57,7 +56,6 @@ public class CombateCliente {
                 }
 
                 //Lee el mensaje con lo que ha pasasdo en el turno
-
                 String mensaje = (String) ois.readObject();
                 System.out.println(mensaje);
 
@@ -72,27 +70,32 @@ public class CombateCliente {
                     System.out.println(eq1.getPokemonActivo().getName() + " ha muerto");
                     Pokemon elegido = eq1.elegir_pokemon();
                     if(elegido == null){
+                        //Significa que se han muerto todos nuestros pokemon
                         oos.writeObject(eq1);
                         break;
                     }
                     oos.writeObject(eq1);
                 }
 
+                //Si se ha muerto el pokemon del rival, lo mostramos por pantalla
                 if(!eqEnemigo.getPokemonActivo().isAlive()){
                     System.out.println("El "+ eqEnemigo.getPokemonActivo().getName() + " rival ha muerto");
                     if(eqEnemigo.AllDead()){
+                        //Significa que se han muerto todos los pokemon del rival
                         break;
                     }
                 }
 
                 System.out.println("El rival esta usando a " + eqEnemigo.getPokemonActivo() + "\n");
 
+                //Volver a elegir acción
                 opciones = eq1.elegir_accion();
                 oos.reset();
             }
             if(opciones[0] == 3) {
                 System.out.println("Te has rendido");
                 oos.writeObject(opciones);
+
                 //Esperar a que el rival elija para que no explote.
                 int[] opciones_rival = (int[]) ois.readObject();
             }else if(eq1.AllDead()){
